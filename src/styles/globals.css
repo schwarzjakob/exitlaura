@@ -2,43 +2,43 @@
 
 :root {
   --font-size: 16px;
-  --background: #ffffff;
-  --foreground: oklch(0.145 0 0);
+  --background: #fdf2f8;
+  --foreground: #2a0d21;
   --card: #ffffff;
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: #030213;
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.95 0.0058 264.53);
-  --secondary-foreground: #030213;
-  --muted: #ececf0;
-  --muted-foreground: #717182;
-  --accent: #e9ebef;
-  --accent-foreground: #030213;
-  --destructive: #d4183d;
+  --card-foreground: #2a0d21;
+  --popover: #ffffff;
+  --popover-foreground: #2a0d21;
+  --primary: #ec4899;
+  --primary-foreground: #ffffff;
+  --secondary: #fce7f3;
+  --secondary-foreground: #831843;
+  --muted: #f9e8f1;
+  --muted-foreground: #7b3a61;
+  --accent: #fbcfe8;
+  --accent-foreground: #7a1a4a;
+  --destructive: #f43f5e;
   --destructive-foreground: #ffffff;
-  --border: rgba(0, 0, 0, 0.1);
+  --border: rgba(236, 72, 153, 0.3);
   --input: transparent;
-  --input-background: #f3f3f5;
-  --switch-background: #cbced4;
+  --input-background: #fdecf5;
+  --switch-background: #f9c5dd;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: oklch(0.708 0 0);
+  --ring: #f472b6;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: #030213;
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: #fdecef;
+  --sidebar-foreground: #4a1330;
+  --sidebar-primary: #ec4899;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #fbcfe8;
+  --sidebar-accent-foreground: #4a1330;
+  --sidebar-border: #f8d8eb;
+  --sidebar-ring: #f472b6;
 }
 
 .dark {
@@ -126,6 +126,59 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Enhanced focus states for better accessibility */
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    @apply ring-2 ring-pink-400 ring-offset-2 ring-offset-white;
+  }
+
+  /* Better hover states for interactive elements */
+  button:hover:not(:disabled),
+  [role="button"]:hover:not([aria-disabled="true"]) {
+    @apply shadow-md;
+  }
+
+  /* Enhanced contrast for interactive cards */
+  .interactive-card {
+    @apply shadow-lg hover:shadow-xl transition-shadow duration-200;
+  }
+
+  /* Better text contrast */
+  .text-interactive {
+    @apply text-gray-800 font-medium;
+  }
+
+  .text-interactive:hover {
+    @apply text-pink-700;
+  }
+
+  /* Enhanced visual hierarchy */
+  .card-elevated {
+    @apply shadow-xl border-2 border-pink-200 bg-white/95;
+  }
+
+  .card-elevated:hover {
+    @apply shadow-2xl border-pink-300;
+  }
+
+  /* Better contrast for interactive elements */
+  .interactive-element {
+    @apply shadow-md hover:shadow-lg transition-all duration-200;
+  }
+
+  /* Enhanced button states */
+  .btn-enhanced {
+    @apply shadow-lg hover:shadow-xl border-2 transition-all duration-200;
+  }
+
+  /* Better focus indicators */
+  .focus-enhanced:focus-visible {
+    @apply ring-2 ring-pink-400 ring-offset-2 ring-offset-white outline-none;
   }
 }
 

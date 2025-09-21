@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'sonner@2.0.3';
 import { CheckCircle, Lock, Star } from 'lucide-react';
@@ -9,6 +9,7 @@ import { InteractiveKreuzwort } from './interactive/InteractiveKreuzwort';
 import { InteractiveAcrostic } from './interactive/InteractiveAcrostic';
 import { InteractiveRomance } from './interactive/InteractiveRomance';
 import { InteractiveFinalePuzzle } from './interactive/InteractiveFinalePuzzle';
+import { InteractiveElch } from './interactive/InteractiveElch';
 import { InteractivePermission } from './interactive/InteractivePermission';
 import { InteractiveReveal } from './interactive/InteractiveReveal';
 
@@ -19,6 +20,7 @@ export type GameStage =
   | 'acrostic' | 'permission-c' | 'reveal-c'
   | 'romance' | 'permission-d' | 'reveal-d'
   | 'finale' | 'permission-e' | 'reveal-e'
+  | 'elch' | 'permission-f' | 'reveal-f'
   | 'completed';
 
 export interface GameState {
@@ -59,6 +61,9 @@ const stageNames = {
   finale: 'Rätsel E: Kristall der Macht',
   'permission-e': 'Erlaubnis: Päckchen E',
   'reveal-e': 'Geschenk E: Controller',
+  elch: 'Rätsel F: Geweih des Nordens',
+  'permission-f': 'Erlaubnis: Päckchen F',
+  'reveal-f': 'Geschenk F: Elch-Gefährte',
   completed: 'Spiel abgeschlossen'
 };
 
@@ -102,7 +107,8 @@ export function GameEngine() {
       'kreuzwort', 'permission-b', 'reveal-b',
       'acrostic', 'permission-c', 'reveal-c',
       'romance', 'permission-d', 'reveal-d',
-      'finale', 'permission-e', 'reveal-e'
+      'finale', 'permission-e', 'reveal-e',
+      'elch', 'permission-f', 'reveal-f'
     ];
     const currentIndex = stageOrder.indexOf(gameState.currentStage);
     const targetIndex = stageOrder.indexOf(stage);
@@ -118,29 +124,47 @@ export function GameEngine() {
   }, [gameState.currentStage]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-pink-950 via-rose-900 to-pink-800 relative overflow-hidden">
       {/* Animated Background */}
-      <div className="absolute inset-0 opacity-20">
-        {[...Array(50)].map((_, i) => (
+      <div className="absolute inset-0">
+        {/* Floating gaming elements */}
+        {[...Array(30)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-yellow-300 rounded-full"
-            initial={{ 
-              x: Math.random() * window.innerWidth, 
+            className="absolute text-pink-300/20 text-2xl"
+            initial={{
+              x: Math.random() * window.innerWidth,
               y: Math.random() * window.innerHeight,
-              scale: 0 
+              scale: 0,
+              rotate: 0
             }}
-            animate={{ 
+            animate={{
               scale: [0, 1, 0],
-              opacity: [0, 1, 0]
+              opacity: [0, 0.6, 0],
+              rotate: [0, 360],
+              y: [null, -50]
             }}
-            transition={{ 
-              duration: 3 + Math.random() * 2,
+            transition={{
+              duration: 4 + Math.random() * 3,
               repeat: Infinity,
-              delay: Math.random() * 2
+              delay: Math.random() * 4
             }}
-          />
+          >
+            {['⚡', '💎', '🎮', '✨', '🏆', '⭐'][Math.floor(Math.random() * 6)]}
+          </motion.div>
         ))}
+      </div>
+
+      {/* Gaming grid pattern overlay */}
+      <div className="absolute inset-0 opacity-5">
+        <div
+          className="w-full h-full"
+          style={{
+            backgroundImage: `linear-gradient(rgba(236, 72, 153, 0.3) 1px, transparent 1px),
+                             linear-gradient(90deg, rgba(236, 72, 153, 0.3) 1px, transparent 1px)`,
+            backgroundSize: '50px 50px'
+          }}
+        />
       </div>
 
       {/* Celebration Animation */}
@@ -173,15 +197,15 @@ export function GameEngine() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-4xl md:text-6xl font-['Jim_Nightshade'] text-yellow-300 mb-4 drop-shadow-lg">
+          <h1 className="text-4xl md:text-6xl font-['Jim_Nightshade'] text-pink-100 mb-4 drop-shadow-2xl">
             Hyrule Geschenkbox
           </h1>
-          <p className="text-xl text-blue-200 mb-6">
+          <p className="text-xl text-pink-200 mb-6">
             Ein magisches Exit-Spiel für {gameState.playerName}
           </p>
           
           {/* Progress Bar */}
-          <div className="max-w-4xl mx-auto bg-black/30 rounded-full p-2 mb-6">
+          <div className="max-w-4xl mx-auto bg-black/40 backdrop-blur-sm rounded-2xl p-4 mb-6 border border-pink-500/30">
             <div className="flex justify-between items-center">
               {[
                 { stage: 'intro', name: 'Intro' },
@@ -189,35 +213,37 @@ export function GameEngine() {
                 { stage: 'kreuzwort', name: 'Rätsel B' },
                 { stage: 'acrostic', name: 'Rätsel C' },
                 { stage: 'romance', name: 'Rätsel D' },
-                { stage: 'finale', name: 'Rätsel E' }
+                { stage: 'finale', name: 'Rätsel E' },
+                { stage: 'elch', name: 'Rätsel F' }
               ].map(({ stage, name }, index) => {
                 const completed = isStageCompleted(stage as GameStage);
-                const current = gameState.currentStage === stage || 
+                const current = gameState.currentStage === stage ||
                                 gameState.currentStage.startsWith(stage.charAt(0).toLowerCase()) ||
                                 (stage === 'intro' && gameState.currentStage === 'intro');
                 const accessible = isStageAccessible(stage as GameStage);
-                
+
                 return (
                   <motion.div
                     key={stage}
                     className={`flex flex-col items-center ${
                       accessible ? 'cursor-pointer' : 'cursor-not-allowed'
                     }`}
-                    whileHover={accessible ? { scale: 1.1 } : {}}
+                    whileHover={accessible ? { scale: 1.15, y: -2 } : {}}
+                    whileTap={accessible ? { scale: 0.95 } : {}}
                     onClick={() => accessible && setGameState(prev => ({ ...prev, currentStage: stage as GameStage }))}
                   >
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-2 transition-all ${
-                      completed ? 'bg-green-500 text-white' :
-                      current ? 'bg-yellow-400 text-black animate-pulse' :
-                      accessible ? 'bg-blue-500 text-white' :
-                      'bg-gray-600 text-gray-400'
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-2 transition-all duration-300 border-2 ${
+                      completed ? 'bg-gradient-to-br from-green-400 to-green-600 text-white border-green-300 shadow-lg shadow-green-500/30' :
+                      current ? 'bg-gradient-to-br from-pink-400 to-pink-600 text-white border-pink-300 animate-pulse shadow-lg shadow-pink-500/50' :
+                      accessible ? 'bg-gradient-to-br from-blue-400 to-blue-600 text-white border-blue-300 shadow-lg shadow-blue-500/30' :
+                      'bg-gray-700 text-gray-400 border-gray-600'
                     }`}>
-                      {completed ? <CheckCircle className="w-4 h-4" /> :
-                       accessible ? index + 1 :
-                       <Lock className="w-4 h-4" />}
+                      {completed ? <CheckCircle className="w-5 h-5" /> :
+                       accessible ? <span className="text-sm font-bold">{index + 1}</span> :
+                       <Lock className="w-5 h-5" />}
                     </div>
-                    <span className={`text-xs text-center ${
-                      accessible ? 'text-white' : 'text-gray-500'
+                    <span className={`text-xs text-center font-medium ${
+                      accessible ? 'text-pink-100' : 'text-gray-500'
                     }`}>
                       {name}
                     </span>
@@ -228,8 +254,8 @@ export function GameEngine() {
           </div>
 
           {/* Current Stage Title */}
-          <motion.h2 
-            className="text-2xl font-['Jim_Nightshade'] text-yellow-200"
+          <motion.h2
+            className="text-2xl font-['Jim_Nightshade'] text-pink-200/90"
             key={gameState.currentStage}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -423,70 +449,116 @@ export function GameEngine() {
               variant="E"
               onComplete={() => {
                 updateGameState({ 
-                  revealedGifts: [...gameState.revealedGifts, 'E'],
-                  currentStage: 'completed'
+                  revealedGifts: [...gameState.revealedGifts, 'E']
                 });
-                completeStage('reveal-e');
+                completeStage('reveal-e', 'elch');
+              }}
+            />
+          )}
+
+          {gameState.currentStage === 'elch' && (
+            <InteractiveElch 
+              gameState={gameState}
+              onComplete={() => completeStage('elch', 'permission-f')}
+            />
+          )}
+
+          {gameState.currentStage === 'permission-f' && (
+            <InteractivePermission 
+              gameState={gameState}
+              variant="F"
+              onComplete={() => {
+                updateGameState({ 
+                  openedPackages: [...gameState.openedPackages, 'F'] 
+                });
+                completeStage('permission-f', 'reveal-f');
+              }}
+            />
+          )}
+
+          {gameState.currentStage === 'reveal-f' && (
+            <InteractiveReveal 
+              gameState={gameState}
+              variant="F"
+              onComplete={() => {
+                updateGameState({ 
+                  revealedGifts: [...gameState.revealedGifts, 'F']
+                });
+                completeStage('reveal-f', 'completed');
               }}
             />
           )}
           
           {gameState.currentStage === 'completed' && (
-            <motion.div 
-              className="text-center p-8 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-3xl shadow-2xl max-w-2xl"
+            <motion.div
+              className="text-center p-8 bg-gradient-to-br from-pink-500 via-pink-600 to-rose-600 rounded-3xl shadow-2xl max-w-2xl border-2 border-pink-300/50"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: "spring", duration: 1 }}
             >
-              <Star className="w-16 h-16 mx-auto mb-4 text-white" />
-              <h2 className="text-3xl font-['Jim_Nightshade'] text-white mb-4">
+              <motion.div
+                className="relative mb-6"
+                initial={{ rotate: 0 }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              >
+                <Star className="w-16 h-16 mx-auto text-yellow-300 drop-shadow-lg" />
+                <div className="absolute inset-0 w-16 h-16 mx-auto bg-yellow-300/20 rounded-full animate-ping" />
+              </motion.div>
+              <h2 className="text-3xl font-['Jim_Nightshade'] text-white mb-4 drop-shadow-lg">
                 🎉 Glückwunsch, {gameState.playerName}! 🎉
               </h2>
-              <p className="text-white text-lg mb-6">
+              <p className="text-pink-100 text-lg mb-6">
                 Du hast alle Rätsel der Göttin von Hyrule gelöst und alle Geschenke freigeschaltet!
               </p>
               <div className="grid grid-cols-2 gap-4 mb-6">
                 {[
                   '🛡️ Zelda-Hüllen-Pack',
-                  '✨ Anime-Sticker', 
-                  '❄️ Kühlmaske', 
-                  '💝 Wundertüte (Romance)', 
-                  '🎮 Nintendo Switch Pro Controller'
+                  '✨ Anime-Sticker',
+                  '❄️ Kühlmaske',
+                  '💝 Wundertüte (Romance)',
+                  '🎮 Nintendo Switch Pro Controller',
+                  '🦌 Elch-Gefährte aus dem Norden'
                 ].map((gift, index) => (
                   <motion.div
                     key={index}
-                    className="bg-white/20 p-3 rounded-lg text-white"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    className="bg-white/20 backdrop-blur-sm p-3 rounded-xl text-white border border-white/30"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.2 }}
+                    whileHover={{ scale: 1.05 }}
                   >
                     {gift}
                   </motion.div>
                 ))}
               </div>
-              <button
+              <motion.button
                 onClick={resetGame}
-                className="bg-white text-orange-500 px-6 py-3 rounded-full hover:bg-gray-100 transition-colors"
+                className="bg-white text-pink-600 px-8 py-3 rounded-full hover:bg-pink-50 transition-colors font-semibold shadow-lg"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Nochmal spielen
-              </button>
+              </motion.button>
             </motion.div>
           )}
         </motion.div>
 
         {/* Game Controls */}
-        <motion.div 
+        <motion.div
           className="fixed bottom-4 right-4 flex gap-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
         >
-          <button
+          <motion.button
             onClick={resetGame}
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors"
+            className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-5 py-3 rounded-xl transition-all font-semibold shadow-lg border border-red-400/50"
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Reset
-          </button>
+            🔄 Reset
+          </motion.button>
         </motion.div>
       </div>
     </div>

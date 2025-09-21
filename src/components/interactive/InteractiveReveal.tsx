@@ -6,7 +6,7 @@ import type { GameState } from "../GameEngine";
 
 interface InteractiveRevealProps {
   gameState: GameState;
-  variant: 'A' | 'B' | 'C' | 'D' | 'E';
+  variant: 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
   onComplete: () => void;
 }
 
@@ -16,37 +16,44 @@ export function InteractiveReveal({ variant, onComplete }: InteractiveRevealProp
       case 'A':
         return {
           title: 'Zwei Schilde im Licht',
-          body: 'Oh – zwei Schilde glänzen im Licht. Dein altes zerbrach im letzten Kampf; jetzt bist du wieder geschützt. Rüste klug, Heldin.',
+          body: 'Oh – zwei Schilde glänzen im Licht. Dein altes zerbrach im letzten Kampf; jetzt bist du wieder geschützt.',
           icon: '🛡️',
           background: 'from-green-400 to-emerald-600'
         };
       case 'B':
         return {
           title: 'Zeichen aus einer anderen Welt',
-          body: 'Diese Zeichen tragen Kraft – fremd und doch faszinierend. Bewahre sie gut; vielleicht verraten sie dir noch Geheimnisse.',
+          body: 'Diese Zeichen stammen aus einer anderen Welt, fremd und doch faszinierend. Bewahre sie gut; vielleicht tragen sie Kraft in sich.',
           icon: '✨',
           background: 'from-purple-400 to-indigo-600'
         };
       case 'C':
         return {
           title: 'Segen der Ruhe',
-          body: 'Lege sie an, wenn der Weg zu laut wird. Im Kühlen der Stille kehren deine Kräfte zurück.',
+          body: 'Die Göttin schenkt dir Ruhe. Lege die Maske an, wenn die Kämpfe zu laut werden. Im Kühlen der Stille kehren deine Kräfte zurück.',
           icon: '❄️',
           background: 'from-cyan-400 to-blue-600'
         };
       case 'D':
         return {
           title: 'Eine sanfte Gabe',
-          body: 'Manchmal ist der größte Mut die zarte Seite. Nimm dir Zeit für Abenteuer auf Papier; sie tragen weit.',
+          body: 'Manchmal ist der größte Mut die zarte Seite. Folge diesem Pfad des Herzens und entdecke Abenteuer auf Papier.',
           icon: '💝',
           background: 'from-pink-400 to-rose-600'
         };
       case 'E':
         return {
           title: 'Das Relikt vereinigt die Kräfte',
-          body: 'Du hast alle Prüfungen bestanden. Vor dir erscheint das mächtigste Relikt – ein Kristall, der deine Kräfte bündelt. Führe ihn mit Bedacht; wahre Stärke liegt in der Harmonie.',
+          body: 'Du hast alle Prüfungen bestanden. Vor dir erscheint das mächtigste Relikt – ein Kristall der Macht, der deine Kräfte bündelt.',
           icon: '💎',
           background: 'from-yellow-400 to-orange-600'
+        };
+      case 'F':
+        return {
+          title: 'Gefährte aus dem Norden',
+          body: 'Und doch… ein letzter Weg bleibt. Weit im Norden, in den stillen Wäldern Schwedens, offenbart sich dir ein Gefährte: ein kleiner Elch. Erinnere dich – er hat sich einst vor euch verborgen, doch nun reist er mit dir.',
+          icon: '🦌',
+          background: 'from-emerald-400 to-sky-600'
         };
       default:
         return {
@@ -168,7 +175,7 @@ export function InteractiveReveal({ variant, onComplete }: InteractiveRevealProp
                 onClick={handleContinue}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 font-['Jim_Nightshade'] text-[18px] shadow-lg"
               >
-                {variant === 'E' ? '🏆 Spiel beenden' : '➡️ Weiter zur nächsten Prüfung'}
+                {variant === 'F' ? '🏆 Spiel beenden' : '➡️ Weiter zur nächsten Prüfung'}
               </Button>
             </motion.div>
             

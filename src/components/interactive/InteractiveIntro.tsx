@@ -145,7 +145,7 @@ export function InteractiveIntro({ gameState, onComplete }: InteractiveIntroProp
                   
                   <Button
                     onClick={handleStartAdventure}
-                    className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-12 py-4 rounded-xl font-['Jim_Nightshade'] text-2xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105"
+                    className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-12 py-4 rounded-xl font-['Jim_Nightshade'] text-2xl shadow-xl hover:shadow-2xl transition-all transform hover:scale-105 border-2 border-green-500"
                   >
                     🗡️ Das Abenteuer beginnen! 🗡️
                   </Button>

@@ -151,12 +151,28 @@ export default function App() {
                         <span className="text-green-600">✓ Neu erstellt</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Rätsel C (Sticker):</span>
+                        <span>Rätsel C (Maske der Stille):</span>
+                        <span className="text-green-600">✓ Aktualisiert</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Rätsel D (Pfad des Herzens):</span>
+                        <span className="text-green-600">✓ Erstellt</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Rätsel E (Kristall der Macht):</span>
+                        <span className="text-green-600">✓ Erstellt</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Rätsel F (Geweih des Nordens):</span>
                         <span className="text-green-600">✓ Neu erstellt</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Finale D (Epilog):</span>
-                        <span className="text-green-600">✓ Neu erstellt</span>
+                        <span>Erlaubnis-Karten A–F:</span>
+                        <span className="text-green-600">✓ Überarbeitet</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Reveal-Karten A–F:</span>
+                        <span className="text-green-600">✓ Story aktualisiert</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Druckvorlage:</span>
@@ -173,7 +189,7 @@ export default function App() {
                       <div>✓ Fantasy/Zelda-Illustrationen</div>
                       <div>✓ Weiße Rahmen mit Schatten</div>
                       <div>✓ Einheitliche Kartengröße</div>
-                      <div>✓ Rätsel-Kennzeichnung (A, B, C, D)</div>
+                      <div>✓ Rätsel-Kennzeichnung (A–F)</div>
                       <div>✓ Vorder- und Rückseiten</div>
                     </div>
                   </div>
@@ -181,13 +197,14 @@ export default function App() {
                   <div className="bg-white rounded-lg shadow-lg p-6">
                     <h3 className="text-lg mb-4">Kompletter Spielflow</h3>
                     <div className="space-y-2 text-sm text-gray-600">
-                      <div>1. Intro → Story etablieren</div>
-                      <div>2. LAURA (5 Buchstaben) → Seite 56</div>
-                      <div>3. Sudoku Seite 56 → Code A,B,C</div>
-                      <div>4. Wächter A=5, B=7, C=9 → "ÖFFNE UMSCHLAG B"</div>
-                      <div>5. Kreuzwort → "TRIFORCE"</div>
-                      <div>6. Sticker → "ÖFFNE DAS KÜHLREICH"</div>
-                      <div>7. Finale → Wundertüte</div>
+                      <div>1. Intro → Pergament &amp; Botschaft der Göttin</div>
+                      <div>2. Namensrätsel → Seite 56 → Sudoku-Code A/B/C</div>
+                      <div>3. Wächterprüfung → Erlaubnis A → Story A</div>
+                      <div>4. Kreuzwort → Triforce-Spalte erscheint → Erlaubnis B</div>
+                      <div>5. Logikgitter Maske → Erlaubnis C → Story C</div>
+                      <div>6. Pfad der Herzen → Erlaubnis D → Story D</div>
+                      <div>7. Kristall der Macht → Erlaubnis E → Story E</div>
+                      <div>8. Geweih des Nordens → Erlaubnis F → Story F</div>
                     </div>
                   </div>
 
@@ -213,6 +230,10 @@ export default function App() {
                       <div className="text-center p-3 bg-pink-50 rounded">
                         <div className="text-2xl mb-1">🎁</div>
                         <div>Wundertüte</div>
+                      </div>
+                      <div className="text-center p-3 bg-amber-50 rounded">
+                        <div className="text-2xl mb-1">🦌</div>
+                        <div>Elch-Gefährte</div>
                       </div>
                     </div>
                   </div>

@@ -5,13 +5,13 @@ import imgComponent4 from "figma:asset/4f048a806263f8bb83388f2709782db27449187b.
 import { Button } from "../ui/button";
 import { FlippableRatselCard } from '../FlippableRatselCard';
 import type { GameState } from "../GameEngine";
+import { PuzzleStageLayout } from '../PuzzleStageLayout';
 
 interface InteractiveElchProps {
   gameState: GameState;
   onComplete: () => void;
 }
 
-// Elch-Rätselkarten Inhalt
 const ElchRatselContent = () => (
   <>
     <p className="mb-3">
@@ -42,7 +42,6 @@ export function InteractiveElch({ onComplete }: InteractiveElchProps) {
   const [selectedAnimal, setSelectedAnimal] = useState<string | null>(null);
   const [showResult, setShowResult] = useState(false);
 
-  // Tiere für das Silhouette-Puzzle
   const animals = [
     { id: 'bear', name: 'Bär', emoji: '🐻', letter: 'A', hasAntlers: false },
     { id: 'elk', name: 'Elch', emoji: '🦌', letter: 'B', hasAntlers: true },
@@ -69,173 +68,106 @@ export function InteractiveElch({ onComplete }: InteractiveElchProps) {
     }
   };
 
+  const cardElement = (
+    <FlippableRatselCard
+      puzzleId="F"
+      title="Das Geweih des Nordens"
+      content={<ElchRatselContent />}
+    />
+  );
+
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="flex gap-8 items-start">
-        {/* Rätselkarte links */}
-        <div className="flex-shrink-0">
-          <FlippableRatselCard
-            puzzleId="F"
-            title="Das Geweih des Nordens"
-            content={<ElchRatselContent />}
-            className="transform scale-125"
-          />
-        </div>
-
-        {/* Spielfeld rechts */}
+    <div className="max-w-7xl mx-auto">
+      <PuzzleStageLayout card={cardElement}>
         <motion.div
-          className="bg-center bg-cover bg-no-repeat h-[600px] w-[700px] rounded-[15px] relative"
-          style={{ backgroundImage: `url('${imgComponent4}')` }}
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8 }}
+          className="font-['Jim_Nightshade:Regular',_sans-serif] flex flex-col gap-8 items-center text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
         >
-          <div className="h-[600px] relative w-[700px] flex flex-col items-center justify-center p-8">
-            <motion.div
-              className="font-['Jim_Nightshade:Regular',_sans-serif] text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <h2 className="text-[28px] text-red-800 mb-6">
-                Das Geweih des Nordens
-              </h2>
-              
-              <p className="text-[14px] text-black mb-8 max-w-[500px]">
-                In den stillen Wäldern Schwedens verbirgt sich ein Gefährte. 
-                Finde das Tier mit dem charakteristischen Geweih!
-              </p>
-
-              {/* Tier-Silhouetten */}
-              <div className="bg-white/90 p-6 rounded-lg shadow-inner mb-6">
-                <div className="grid grid-cols-3 gap-6 max-w-[400px] mx-auto">
-                  {animals.slice(0, 3).map((animal) => {
-                    const isSelected = selectedAnimal === animal.id;
-                    const isCorrect = animal.id === correctAnswer;
-                    
-                    return (
-                      <motion.div
-                        key={animal.id}
-                        className={`cursor-pointer text-center ${
-                          showResult && isSelected
-                            ? isCorrect 
-                              ? 'bg-green-100 border-2 border-green-500' 
-                              : 'bg-red-100 border-2 border-red-500'
-                            : 'hover:bg-gray-50'
-                        } p-4 rounded-lg transition-all`}
-                        onClick={() => !showResult && handleAnimalSelect(animal.id)}
-                        whileHover={{ scale: showResult ? 1 : 1.05 }}
-                        whileTap={{ scale: showResult ? 1 : 0.95 }}
-                      >
-                        {/* Silhouette */}
-                        <div className="w-20 h-20 bg-black rounded-lg mb-3 flex items-center justify-center shadow-lg mx-auto">
-                          <div className="text-white text-[32px]">{animal.emoji}</div>
-                        </div>
-                        
-                        {/* Letter */}
-                        <div className="font-['Jim_Nightshade'] text-[18px] text-black font-bold mb-2">
-                          {animal.letter}
-                        </div>
-                        
-                        {/* Name (nur nach Auswahl sichtbar) */}
-                        {showResult && isSelected && (
-                          <motion.div
-                            className="font-['Jim_Nightshade'] text-[14px] text-gray-600"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                          >
-                            {animal.name}
-                          </motion.div>
-                        )}
-                      </motion.div>
-                    );
-                  })}
-                </div>
-                
-                {/* Zusätzliche Tiere in zweiter Reihe */}
-                <div className="grid grid-cols-2 gap-6 max-w-[300px] mx-auto mt-6">
-                  {animals.slice(3).map((animal) => {
-                    const isSelected = selectedAnimal === animal.id;
-                    const isCorrect = animal.id === correctAnswer;
-                    
-                    return (
-                      <motion.div
-                        key={animal.id}
-                        className={`cursor-pointer text-center ${
-                          showResult && isSelected
-                            ? isCorrect 
-                              ? 'bg-green-100 border-2 border-green-500' 
-                              : 'bg-red-100 border-2 border-red-500'
-                            : 'hover:bg-gray-50'
-                        } p-4 rounded-lg transition-all`}
-                        onClick={() => !showResult && handleAnimalSelect(animal.id)}
-                        whileHover={{ scale: showResult ? 1 : 1.05 }}
-                        whileTap={{ scale: showResult ? 1 : 0.95 }}
-                      >
-                        {/* Silhouette */}
-                        <div className="w-20 h-20 bg-black rounded-lg mb-3 flex items-center justify-center shadow-lg mx-auto">
-                          <div className="text-white text-[32px]">{animal.emoji}</div>
-                        </div>
-                        
-                        {/* Letter */}
-                        <div className="font-['Jim_Nightshade'] text-[18px] text-black font-bold mb-2">
-                          {animal.letter}
-                        </div>
-                        
-                        {/* Name (nur nach Auswahl sichtbar) */}
-                        {showResult && isSelected && (
-                          <motion.div
-                            className="font-['Jim_Nightshade'] text-[14px] text-gray-600"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                          >
-                            {animal.name}
-                          </motion.div>
-                        )}
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Ergebnis */}
-              {showResult && selectedAnimal === correctAnswer && (
-                <motion.div
-                  className="bg-green-100 border-2 border-green-600 rounded-lg p-4 mb-4"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="text-[20px] mb-2">🦌</div>
-                  <p className="font-['Jim_Nightshade'] text-[16px] text-green-800 font-bold">
-                    Du hast den Elch gefunden!
-                  </p>
-                  <p className="text-[12px] text-green-700 mt-2">
-                    Der stille Gefährte aus Schwedens Wäldern begleitet dich nun auf deiner Reise.
-                  </p>
-                </motion.div>
-              )}
-
-              {/* Zurücksetzen Button */}
-              {showResult && selectedAnimal !== correctAnswer && (
-                <Button
-                  onClick={() => {
-                    setShowResult(false);
-                    setSelectedAnimal(null);
-                  }}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 font-['Jim_Nightshade'] text-[16px]"
-                >
-                  Nochmal versuchen
-                </Button>
-              )}
-            </motion.div>
+          <div className="space-y-2 max-w-xl">
+            <h2 className="text-[32px] text-gray-900 font-bold">Das Geweih des Nordens</h2>
+            <p className="text-[14px] text-black/70">
+              Wähle den Gefährten, der sein Geweih mit Stolz trägt. Nur er begleitet dich auf dem letzten Weg.
+            </p>
           </div>
-          <div
-            aria-hidden="true"
-            className="absolute border-[6px] border-solid border-white inset-0 pointer-events-none rounded-[15px] shadow-[0px_4px_8px_0px_#9db3ce]"
-          />
+
+          <div className="relative w-full max-w-xl">
+            <div
+              className="absolute inset-0 opacity-25 rounded-3xl"
+              style={{
+                backgroundImage: `url('${imgComponent4}')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
+            />
+            <div className="relative bg-white/90 border-2 border-pink-200 backdrop-blur rounded-3xl p-6 shadow-xl">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                {animals.map((animal) => {
+                  const isSelected = selectedAnimal === animal.id;
+                  const isCorrect = animal.id === correctAnswer;
+
+                  return (
+                    <motion.button
+                      key={animal.id}
+                      onClick={() => !showResult && handleAnimalSelect(animal.id)}
+                      className={`flex flex-col items-center gap-3 rounded-2xl border-2 px-5 py-4 transition-all shadow-md hover:shadow-lg ${
+                        showResult && isSelected
+                          ? isCorrect
+                            ? 'bg-emerald-100 border-emerald-500 text-emerald-800 shadow-emerald-200'
+                            : 'bg-rose-100 border-rose-500 text-rose-700 shadow-rose-200'
+                          : 'bg-white border-pink-200 hover:border-pink-400 hover:bg-pink-50'
+                      } ${showResult ? 'cursor-default' : 'cursor-pointer'}`}
+                      whileHover={!showResult ? { scale: 1.05 } : {}}
+                      whileTap={!showResult ? { scale: 0.97 } : {}}
+                      disabled={showResult}
+                    >
+                      <div className="w-20 h-20 bg-gradient-to-br from-pink-100 to-pink-200 rounded-2xl flex items-center justify-center text-4xl shadow-lg border border-pink-300">
+                        {animal.emoji}
+                      </div>
+                      <div className="text-[18px] text-pink-700 font-bold">{animal.letter}</div>
+                      {showResult && isSelected && (
+                        <motion.div
+                          className="text-sm text-black/70"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                        >
+                          {animal.name}
+                        </motion.div>
+                      )}
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {showResult && selectedAnimal === correctAnswer && (
+            <motion.div
+              className="bg-emerald-100 border border-emerald-400 rounded-3xl px-6 py-4 max-w-sm shadow-lg"
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+            >
+              <p className="text-2xl mb-2">🦌</p>
+              <p className="text-[15px] text-emerald-700 font-semibold">
+                Du hast den Elch gefunden! Der stille Gefährte begleitet dich nun durch Schwedens Wälder.
+              </p>
+            </motion.div>
+          )}
+
+          {showResult && selectedAnimal !== correctAnswer && (
+            <Button
+              onClick={() => {
+                setShowResult(false);
+                setSelectedAnimal(null);
+              }}
+              className="h-11 rounded-full bg-pink-600 hover:bg-pink-500 px-8 text-sm font-semibold text-white shadow-md shadow-pink-500/30"
+            >
+              Nochmal versuchen
+            </Button>
+          )}
         </motion.div>
-      </div>
+      </PuzzleStageLayout>
     </div>
   );
 }

@@ -59,27 +59,21 @@ export const KreuzwortRatselContent = () => (
 export const AcrosticRatselContent = () => (
   <>
     <p className="mb-3">
-      Wenn die Welt zu laut wird,
+      In der Halle der Stille stehen neun Podeste: Nordpfad, Waldlichtung, Eishöhle – jeder Ort trägt drei Kreise.
       <br />
-      suche Ruhe im Kühlen.
-      <br />
-      Setze die Zeichen zusammen,
-      <br />
-      lass sie dich führen.
+      Nur ein Platz bewahrt die Maske der Ruhe.
     </p>
     
     <p className="mb-3">
-      Von oben nach unten,
+      Spüre den Frost: Nicht im Wind des Nordpfades, nicht an den äußeren Säulen –
       <br />
-      der erste Buchstabe zählt.
+      dort rascheln nur Blätter.
       <br />
-      Was kühl hält und beruhigt,
-      <br />
-      ist was dir hier fehlt.
+      Wer den inneren Kreis der Eishöhle findet, hört die Göttin flüstern.
     </p>
     
     <div className="text-center mt-4 p-2 bg-white/80 rounded text-[10px] text-gray-700">
-      <strong>Tipp:</strong> Die ersten Buchstaben der Sticker ergeben das Lösungswort
+      <strong>Hinweis:</strong> Finde das Podest der Maske – dort wartet der Weg zu Päckchen&nbsp;C.
     </div>
   </>
 );

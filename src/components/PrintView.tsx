@@ -1,4 +1,3 @@
-import Frame1 from '../imports/Frame1';
 import { IntroCard } from './IntroCard';
 import { SudokuCard } from './SudokuCard';
 import { WaechterCard } from './WaechterCard';
@@ -8,6 +7,7 @@ import { KreuzwortCard } from './KreuzwortCard';
 import { AcrosticCard } from './AcrosticCard';
 import { RomanceCard } from './RomanceCard';
 import { FinalePuzzleCard } from './FinalePuzzleCard';
+import { ElchCard } from './ElchCard';
 
 export function PrintView() {
   return (
@@ -16,19 +16,27 @@ export function PrintView() {
         <h1 className="text-2xl text-black mb-2">DIY Exit-Spiel: Hyrule Geschenkbox</h1>
         <p className="text-gray-600">Komplettes Kartenset - Neue Struktur mit Päckchen-System</p>
         <div className="mt-4 p-4 bg-gray-50 rounded-lg text-sm text-left max-w-3xl mx-auto">
-          <h3 className="font-bold mb-2">Neuer Spielflow:</h3>
+          <h3 className="font-bold mb-2">Spielflow:</h3>
           <ol className="space-y-1 text-gray-700">
-            <li>1. <strong>Intro:</strong> "Die Prüfungen der Göttin" - Story etablieren</li>
-            <li>2. <strong>Rätsel A:</strong> Sudoku → Code A,B,C → Wächter → Erlaubnis A</li>
-            <li>3. <strong>Päckchen A öffnen:</strong> Zelda-Hüllen → Reveal A lesen</li>
-            <li>4. <strong>Rätsel B:</strong> Kreuzwort → Erlaubnis B</li>
-            <li>5. <strong>Päckchen B öffnen:</strong> Anime-Sticker → Reveal B lesen</li>
-            <li>6. <strong>Rätsel C:</strong> Acrostic → Erlaubnis C</li>
-            <li>7. <strong>Päckchen C öffnen:</strong> Kühlmaske → Reveal C lesen</li>
-            <li>8. <strong>Rätsel D:</strong> Romance → Erlaubnis D</li>
-            <li>9. <strong>Päckchen D öffnen:</strong> Wundertüte → Reveal D lesen</li>
-            <li>10. <strong>Rätsel E:</strong> Finale → Erlaubnis E</li>
-            <li>11. <strong>Päckchen E öffnen:</strong> Nintendo Switch Pro Controller → Reveal E lesen</li>
+            <li>1. <strong>Intro:</strong> Pergament eröffnet die Prüfungen.</li>
+            <li>2. <strong>Rätsel A:</strong> Sudoku &amp; Wächtercode.</li>
+            <li>3. <strong>Erlaubnis A:</strong> "Päckchen A öffnen".</li>
+            <li>4. <strong>Story A:</strong> Zelda-Hüllen.</li>
+            <li>5. <strong>Rätsel B:</strong> Kreuzwort der Symbole.</li>
+            <li>6. <strong>Erlaubnis B:</strong> "Päckchen B öffnen".</li>
+            <li>7. <strong>Story B:</strong> Sticker-Botschaften.</li>
+            <li>8. <strong>Rätsel C:</strong> Logikgitter "Stille der Maske".</li>
+            <li>9. <strong>Erlaubnis C:</strong> "Päckchen C öffnen".</li>
+            <li>10. <strong>Story C:</strong> Maske der Ruhe.</li>
+            <li>11. <strong>Rätsel D:</strong> Pfad des Herzens.</li>
+            <li>12. <strong>Erlaubnis D:</strong> "Päckchen D öffnen".</li>
+            <li>13. <strong>Story D:</strong> Wundertüte.</li>
+            <li>14. <strong>Rätsel E:</strong> Kristall der Macht.</li>
+            <li>15. <strong>Erlaubnis E:</strong> "Päckchen E öffnen".</li>
+            <li>16. <strong>Story E:</strong> Controller (Finale).</li>
+            <li>17. <strong>Rätsel F:</strong> Geweih des Nordens.</li>
+            <li>18. <strong>Erlaubnis F:</strong> "Päckchen F öffnen".</li>
+            <li>19. <strong>Story F:</strong> Elch-Gefährte (Epilog).</li>
           </ol>
         </div>
       </div>
@@ -73,9 +81,9 @@ export function PrintView() {
         </div>
       </div>
 
-      {/* Rätsel C - Sticker */}
+      {/* Rätsel C - Maske */}
       <div className="border-t-2 border-gray-300 pt-8">
-        <h2 className="text-xl text-center mb-6 text-gray-800">Rätsel C - Sticker der Anime-Welten</h2>
+        <h2 className="text-xl text-center mb-6 text-gray-800">Rätsel C - Halle der Stille</h2>
         <div className="flex justify-center">
           <div className="transform scale-75">
             <AcrosticCard />
@@ -85,7 +93,7 @@ export function PrintView() {
 
       {/* Rätsel D - Romance */}
       <div className="border-t-2 border-gray-300 pt-8">
-        <h2 className="text-xl text-center mb-6 text-gray-800">Rätsel D - Romance</h2>
+        <h2 className="text-xl text-center mb-6 text-gray-800">Rätsel D - Pfad des Herzens</h2>
         <div className="flex justify-center">
           <div className="transform scale-75">
             <RomanceCard />
@@ -95,7 +103,7 @@ export function PrintView() {
 
       {/* Rätsel E - Finale */}
       <div className="border-t-2 border-gray-300 pt-8">
-        <h2 className="text-xl text-center mb-6 text-gray-800">Rätsel E - Finale</h2>
+        <h2 className="text-xl text-center mb-6 text-gray-800">Rätsel E - Kristall der Macht</h2>
         <div className="flex justify-center">
           <div className="transform scale-75">
             <FinalePuzzleCard />
@@ -103,11 +111,21 @@ export function PrintView() {
         </div>
       </div>
 
+      {/* Rätsel F - Elch */}
+      <div className="border-t-2 border-gray-300 pt-8">
+        <h2 className="text-xl text-center mb-6 text-gray-800">Rätsel F - Geweih des Nordens</h2>
+        <div className="flex justify-center">
+          <div className="transform scale-75">
+            <ElchCard />
+          </div>
+        </div>
+      </div>
+
       {/* Permission Cards */}
       <div className="border-t-2 border-gray-300 pt-8">
-        <h2 className="text-xl text-center mb-6 text-gray-800">Erlaubnis-Karten (A-E)</h2>
+        <h2 className="text-xl text-center mb-6 text-gray-800">Erlaubnis-Karten (A-F)</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-          {(['A', 'B', 'C', 'D', 'E'] as const).map((variant) => (
+          {(['A', 'B', 'C', 'D', 'E', 'F'] as const).map((variant) => (
             <div key={variant} className="text-center">
               <h3 className="text-sm text-gray-600 mb-2">Erlaubnis {variant}</h3>
               <div className="transform scale-50">
@@ -120,9 +138,9 @@ export function PrintView() {
 
       {/* Reveal Cards */}
       <div className="border-t-2 border-gray-300 pt-8">
-        <h2 className="text-xl text-center mb-6 text-gray-800">Reveal-Karten (A-E)</h2>
+        <h2 className="text-xl text-center mb-6 text-gray-800">Reveal-Karten (A-F)</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-          {(['A', 'B', 'C', 'D', 'E'] as const).map((variant) => (
+          {(['A', 'B', 'C', 'D', 'E', 'F'] as const).map((variant) => (
             <div key={variant} className="text-center">
               <h3 className="text-sm text-gray-600 mb-2">Reveal {variant}</h3>
               <div className="transform scale-50">
@@ -156,13 +174,14 @@ export function PrintView() {
           <h3 className="text-lg font-bold mb-4 text-green-800">Benötigte Materialien:</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-green-700">
             <div>
-              <h4 className="font-bold mb-2">Geschenke (Päckchen A-E):</h4>
+              <h4 className="font-bold mb-2">Geschenke (Päckchen A-F):</h4>
               <ul className="space-y-1">
                 <li>• <strong>Päckchen A:</strong> Zelda-Hüllen-Pack</li>
                 <li>• <strong>Päckchen B:</strong> Anime-Sticker (Jujutsu Kaisen / Attack on Titan)</li>
                 <li>• <strong>Päckchen C:</strong> Kühlmaske</li>
                 <li>• <strong>Päckchen D:</strong> Wundertüte (Romance)</li>
                 <li>• <strong>Päckchen E:</strong> Nintendo Switch Pro Controller (Finale)</li>
+                <li>• <strong>Päckchen F:</strong> Kleiner Elch / Nordischer Gefährte</li>
               </ul>
             </div>
             <div>

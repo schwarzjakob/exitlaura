@@ -100,8 +100,8 @@ export function InteractiveSticker({ onComplete }: InteractiveStickerProps) {
 
             <div className="flex gap-6 justify-center">
               {/* Sticker-Sammlung */}
-              <div className="bg-white/90 p-4 rounded-lg shadow-inner max-w-2xl">
-                <h3 className="text-[16px] text-black mb-4 font-bold">Anime-Sticker sammeln:</h3>
+              <div className="bg-white/95 p-4 rounded-lg shadow-lg border-2 border-pink-200 max-w-2xl">
+                <h3 className="text-[16px] text-gray-800 mb-4 font-bold">Anime-Sticker sammeln:</h3>
                 
                 <div className="grid grid-cols-6 gap-2 mb-4">
                   {stickerData.map((sticker) => {
@@ -114,10 +114,10 @@ export function InteractiveSticker({ onComplete }: InteractiveStickerProps) {
                         onClick={() => handleStickerClick(sticker)}
                         className={`
                           w-16 h-16 rounded-lg flex flex-col items-center justify-center cursor-pointer 
-                          border-2 transition-all relative group
+                          border-2 transition-all relative group shadow-md hover:shadow-lg
                           ${isSelected 
-                            ? 'bg-yellow-200 border-yellow-600 scale-110' 
-                            : 'bg-white border-gray-300 hover:border-blue-500 hover:shadow-md'
+                            ? 'bg-yellow-200 border-yellow-600 scale-110 shadow-yellow-200' 
+                            : 'bg-white border-pink-300 hover:border-pink-500 hover:bg-pink-50'
                           }
                         `}
                         whileHover={{ scale: isSelected ? 1.1 : 1.05 }}
@@ -130,14 +130,14 @@ export function InteractiveSticker({ onComplete }: InteractiveStickerProps) {
                         </div>
                         
                         {/* Position */}
-                        <div className="text-[8px] text-gray-600">
+                        <div className="text-[8px] text-gray-700 font-medium">
                           {sticker.position}
                         </div>
                         
                         {/* Auswahlreihenfolge */}
                         {isSelected && (
                           <motion.div
-                            className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold"
+                            className="absolute -top-2 -right-2 w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold shadow-lg border-2 border-white"
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             exit={{ scale: 0 }}
@@ -196,10 +196,10 @@ export function InteractiveSticker({ onComplete }: InteractiveStickerProps) {
               </div>
 
               {/* Nachricht-Anzeige */}
-              <div className="bg-white/90 p-4 rounded-lg shadow-inner min-w-80">
-                <h3 className="text-[16px] text-black mb-4 font-bold">Enthüllte Nachricht:</h3>
+              <div className="bg-white/95 p-4 rounded-lg shadow-lg border-2 border-pink-200 min-w-80">
+                <h3 className="text-[16px] text-gray-800 mb-4 font-bold">Enthüllte Nachricht:</h3>
                 
-                <div className="bg-yellow-100 p-4 rounded-lg mb-4 min-h-20 flex items-center justify-center">
+                <div className="bg-yellow-100 border-2 border-yellow-300 p-4 rounded-lg mb-4 min-h-20 flex items-center justify-center shadow-inner">
                   <motion.div 
                     className="text-xl font-bold text-red-800 text-center"
                     key={revealedMessage}

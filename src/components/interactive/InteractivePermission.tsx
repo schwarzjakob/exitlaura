@@ -6,7 +6,7 @@ import type { GameState } from "../GameEngine";
 
 interface InteractivePermissionProps {
   gameState: GameState;
-  variant: 'A' | 'B' | 'C' | 'D' | 'E';
+  variant: 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
   onComplete: () => void;
 }
 
@@ -14,6 +14,9 @@ export function InteractivePermission({ variant, onComplete }: InteractivePermis
   const getTitle = () => {
     if (variant === 'E') {
       return 'Letztes Siegel gebrochen';
+    }
+    if (variant === 'F') {
+      return 'Bonus-Siegel gebrochen';
     }
     return 'Siegel gebrochen';
   };

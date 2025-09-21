@@ -46,12 +46,6 @@ export function ElchCard() {
           <p>Finde ihn – und du erhältst den letzten Schatz.</p>
         </div>
         
-        {/* Answer indication */}
-        <div className="bg-[#FFE4B5]/50 border border-[#C8A75E] rounded-lg p-3">
-          <p className="font-['Jim_Nightshade'] text-[14px] text-[#8B4513] italic">
-            Lösung: <span className="font-bold">B</span> (Elch/🦌)
-          </p>
-        </div>
       </div>
     </div>
   );

@@ -3,9 +3,9 @@ import { motion } from "motion/react";
 import { toast } from "sonner@2.0.3";
 import imgComponent4 from "figma:asset/4f048a806263f8bb83388f2709782db27449187b.png";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import { FlippableRatselCard } from '../FlippableRatselCard';
 import { FinaleRatselContent } from '../RatselCardContents';
+import { PuzzleStageLayout } from '../PuzzleStageLayout';
 import type { GameState } from "../GameEngine";
 
 interface InteractiveFinalePuzzleProps {
@@ -17,7 +17,6 @@ export function InteractiveFinalePuzzle({ onComplete }: InteractiveFinalePuzzleP
   const [selectedOrder, setSelectedOrder] = useState<string[]>([]);
   const [showSolution, setShowSolution] = useState(false);
 
-  // Fragment symbols representing the previous puzzles
   const fragments = [
     { symbol: '🛡️', name: 'Schild', order: 'A', description: 'Sudoku der Zahlen' },
     { symbol: '⚔️', name: 'Zeichen', order: 'B', description: 'Netz der Symbole' },
@@ -29,10 +28,8 @@ export function InteractiveFinalePuzzle({ onComplete }: InteractiveFinalePuzzleP
 
   const handleFragmentClick = (order: string) => {
     if (selectedOrder.includes(order)) {
-      // Remove from selection
       setSelectedOrder(selectedOrder.filter(o => o !== order));
     } else if (selectedOrder.length < 4) {
-      // Add to selection
       setSelectedOrder([...selectedOrder, order]);
     }
   };
@@ -57,163 +54,135 @@ export function InteractiveFinalePuzzle({ onComplete }: InteractiveFinalePuzzleP
     setShowSolution(false);
   };
 
-  const getFragmentByOrder = (order: string) => {
-    return fragments.find(f => f.order === order);
-  };
+  const getFragmentByOrder = (order: string) =>
+    fragments.find(f => f.order === order);
+
+  const cardElement = (
+    <FlippableRatselCard
+      puzzleId="E"
+      title="Kristall der Macht"
+      content={<FinaleRatselContent />}
+    />
+  );
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      {/* Rätselkarte */}
-      <div className="flex justify-center mb-6">
-        <FlippableRatselCard
-          puzzleId="E"
-          title="Kristall der Macht"
-          content={<FinaleRatselContent />}
-        />
-      </div>
-
-      <motion.div
-        className="bg-center bg-cover bg-no-repeat h-[600px] w-[800px] rounded-[15px] mx-auto relative"
-        style={{ backgroundImage: `url('${imgComponent4}')` }}
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="h-[600px] overflow-clip relative w-[800px] flex flex-col items-center justify-center p-8">
-          <motion.div
-            className="font-['Jim_Nightshade:Regular',_sans-serif] text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <h2 className="text-[28px] text-red-800 mb-4">
-              Der Kristall der Macht
-            </h2>
-            <p className="text-[14px] text-black mb-6">
-              Alle Siegel sind gefallen – fast. Setze die Fragmente deiner Reise in die richtige Reihenfolge.
+    <div className="max-w-7xl mx-auto">
+      <PuzzleStageLayout card={cardElement}>
+        <motion.div
+          className="font-['Jim_Nightshade:Regular',_sans-serif] flex flex-col gap-8 items-center text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+        >
+          <div className="space-y-2 max-w-xl">
+            <h2 className="text-[32px] text-gray-900 font-bold">Der Kristall der Macht</h2>
+            <p className="text-[14px] text-black/70">
+              Ordne die Fragmente deiner Reise. Nur in der richtigen Reihenfolge entsteht der finale Kristall.
             </p>
+          </div>
 
-            {/* Scattered Fragments */}
-            <div className="bg-white/90 p-6 rounded-lg shadow-inner w-full max-w-[600px] mx-auto mb-6">
-              <p className="font-['Jim_Nightshade'] text-[14px] text-black text-center mb-4">
-                Klicke auf die Fragmente, um sie zu ordnen:
-              </p>
-              
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                {[...fragments].sort(() => Math.random() - 0.5).map((fragment) => {
-                  const isSelected = selectedOrder.includes(fragment.order);
-                  const selectionIndex = selectedOrder.indexOf(fragment.order);
-                  
-                  return (
-                    <motion.div 
-                      key={fragment.order} 
-                      className={`relative cursor-pointer p-4 border-2 border-dashed rounded transition-all ${
-                        isSelected 
-                          ? 'border-yellow-600 bg-yellow-100' 
-                          : 'border-gray-400 bg-white hover:bg-gray-50'
-                      }`}
-                      onClick={() => handleFragmentClick(fragment.order)}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <div className="flex flex-col items-center">
-                        <div className="text-[32px] mb-2">{fragment.symbol}</div>
-                        <div className="font-['Jim_Nightshade'] text-[12px] text-black text-center">
-                          <div className="font-bold">{fragment.name}</div>
-                          <div className="text-gray-600">{fragment.description}</div>
-                        </div>
-                      </div>
-                      
-                      {/* Selection number */}
-                      {isSelected && (
-                        <div className="absolute -top-2 -right-2 w-8 h-8 bg-yellow-400 border-2 border-yellow-600 rounded-full flex items-center justify-center">
-                          <span className="font-['Jim_Nightshade'] text-[14px] font-bold text-black">
+          <div className="w-full flex flex-col lg:flex-row gap-8 items-start">
+            <div className="relative flex-1 w-full">
+              <div
+                className="absolute inset-0 opacity-25 rounded-3xl"
+                style={{
+                  backgroundImage: `url('${imgComponent4}')`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
+                }}
+              />
+              <div className="relative rounded-3xl border-2 border-pink-200 bg-white/90 backdrop-blur p-6 shadow-xl">
+                <p className="text-sm text-gray-700 mb-4 font-medium">
+                  Klicke auf die Fragmente, um ihre Reihenfolge festzulegen.
+                </p>
+                <div className="grid gap-4 md:grid-cols-2">
+                  {fragments.map((fragment) => {
+                    const isSelected = selectedOrder.includes(fragment.order);
+                    const selectionIndex = selectedOrder.indexOf(fragment.order);
+
+                    return (
+                      <motion.button
+                        key={fragment.order}
+                        onClick={() => handleFragmentClick(fragment.order)}
+                        className={`relative flex flex-col items-center gap-2 rounded-2xl border-2 px-5 py-4 text-center transition-all shadow-md hover:shadow-lg ${
+                          isSelected ? 'bg-pink-100 border-pink-500 shadow-pink-200' : 'bg-white border-pink-200 hover:border-pink-400 hover:bg-pink-50'
+                        }`}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <span className="text-3xl">{fragment.symbol}</span>
+                        <span className="text-[16px] text-pink-700 font-bold">{fragment.name}</span>
+                        <span className="text-xs text-gray-600 font-medium">{fragment.description}</span>
+                        {isSelected && (
+                          <span className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-pink-600 text-white text-sm font-bold flex items-center justify-center shadow-lg border-2 border-white">
                             {selectionIndex + 1}
                           </span>
-                        </div>
-                      )}
-                    </motion.div>
-                  );
-                })}
-              </div>
-              
-              {/* Assembly area */}
-              <div className="border-2 border-yellow-600 rounded-lg p-4 bg-yellow-50">
-                <p className="font-['Jim_Nightshade'] text-[12px] text-center text-red-800 mb-3">
-                  Reihenfolge deiner Prüfungen: A → B → C → D
-                </p>
-                <div className="flex justify-center gap-2">
-                  {['A', 'B', 'C', 'D'].map((letter, index) => {
-                    const fragment = selectedOrder[index] ? getFragmentByOrder(selectedOrder[index]) : null;
-                    
-                    return (
-                      <div key={letter} className="w-16 h-16 border-2 border-gray-400 rounded flex flex-col items-center justify-center bg-white">
-                        {fragment ? (
-                          <>
-                            <div className="text-[20px]">{fragment.symbol}</div>
-                            <div className="text-[8px] text-gray-600">{letter}</div>
-                          </>
-                        ) : (
-                          <span className="font-['Jim_Nightshade'] text-[18px] text-gray-400 font-bold">
-                            {letter}
-                          </span>
                         )}
-                      </div>
+                      </motion.button>
                     );
                   })}
                 </div>
               </div>
             </div>
 
-            {showSolution && (
-              <motion.div
-                className="mb-6 p-4 bg-green-100 border-2 border-green-600 rounded-lg"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <div className="text-[24px] mb-2">💎</div>
-                <p className="font-['Jim_Nightshade'] text-[16px] text-green-800 font-bold">
-                  Der Kristall der Macht erscheint!
-                </p>
-                <p className="text-[12px] text-green-700 mt-2">
-                  Du hast alle Fragmente in die richtige Reihenfolge gebracht. Das letzte Siegel bricht...
-                </p>
-              </motion.div>
-            )}
+            <div className="w-full max-w-sm bg-white/85 border border-pink-100 rounded-3xl p-6 shadow-lg text-left">
+              <h3 className="text-[16px] text-pink-600 font-semibold mb-4 text-center">Reihenfolge deiner Prüfungen</h3>
+              <div className="flex justify-between gap-3 text-sm text-black/70">
+                {['A', 'B', 'C', 'D'].map((letter, index) => {
+                  const fragment = selectedOrder[index] ? getFragmentByOrder(selectedOrder[index]) : null;
+                  return (
+                    <div key={letter} className="flex-1 min-h-[90px] rounded-2xl border border-pink-200 bg-pink-50/60 flex flex-col items-center justify-center gap-2">
+                      {fragment ? (
+                        <>
+                          <span className="text-2xl">{fragment.symbol}</span>
+                          <span className="text-xs text-pink-600 font-semibold">{letter}</span>
+                        </>
+                      ) : (
+                        <span className="text-xl text-pink-200">{letter}</span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
 
-            {/* Controls */}
-            <div className="space-y-4">
-              <div className="flex gap-2 justify-center">
+              <div className="mt-6 flex flex-wrap gap-3 justify-center">
                 <Button
                   onClick={resetOrder}
-                  className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 font-['Jim_Nightshade'] text-[16px]"
+                  className="h-10 rounded-full bg-pink-100 text-pink-600 hover:bg-pink-200 px-6 text-sm font-semibold border border-pink-200"
                 >
                   Zurücksetzen
                 </Button>
-                {selectedOrder.length === 4 && !showSolution && (
-                  <Button
-                    onClick={checkOrder}
-                    className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 font-['Jim_Nightshade'] text-[18px]"
-                  >
-                    Reihenfolge prüfen
-                  </Button>
-                )}
+                <Button
+                  onClick={checkOrder}
+                  disabled={selectedOrder.length !== 4 || showSolution}
+                  className="h-10 rounded-full bg-pink-600 hover:bg-pink-500 px-8 text-sm font-semibold shadow-md shadow-pink-500/30 disabled:opacity-60"
+                >
+                  Reihenfolge prüfen
+                </Button>
               </div>
 
               {selectedOrder.length > 0 && (
-                <div className="text-[12px] text-gray-600">
+                <p className="mt-4 text-xs text-black/50 text-center">
                   Gewählte Reihenfolge: {selectedOrder.join(' → ')}
-                </div>
+                </p>
               )}
             </div>
-          </motion.div>
-        </div>
-        <div
-          aria-hidden="true"
-          className="absolute border-[6px] border-solid border-white inset-0 pointer-events-none rounded-[15px] shadow-[0px_4px_8px_0px_#9db3ce]"
-        />
-      </motion.div>
+          </div>
+
+          {showSolution && (
+            <motion.div
+              className="w-full max-w-md bg-white/90 border border-emerald-300 rounded-3xl px-6 py-5 shadow-xl"
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+            >
+              <p className="text-2xl mb-2">💎</p>
+              <p className="text-[15px] text-emerald-700 font-semibold">
+                Der Kristall der Macht erscheint! Du hast alle Fragmente vereint – die letzte Prüfung ist bestanden.
+              </p>
+            </motion.div>
+          )}
+        </motion.div>
+      </PuzzleStageLayout>
     </div>
   );
 }

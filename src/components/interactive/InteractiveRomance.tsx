@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { FlippableRatselCard } from '../FlippableRatselCard';
 import { RomanceRatselContent } from '../RatselCardContents';
+import { PuzzleStageLayout } from '../PuzzleStageLayout';
 import type { GameState } from "../GameEngine";
 
 interface InteractiveRomanceProps {
@@ -16,24 +17,22 @@ interface InteractiveRomanceProps {
 export function InteractiveRomance({ onComplete }: InteractiveRomanceProps) {
   const [selectedPath, setSelectedPath] = useState<number[]>([]);
   const [userInput, setUserInput] = useState("");
-  const [showInput, setShowInput] = useState(true); // Für Debug: sofort auf true setzen
+  const [showInput, setShowInput] = useState(true);
 
-  // Heart puzzle - following hearts in the right order reveals hidden letters
   const hearts = [
-    { id: 1, x: 60, y: 80, letter: 'R', correct: 1 },
-    { id: 2, x: 160, y: 60, letter: 'O', correct: 2 },
-    { id: 3, x: 240, y: 100, letter: 'M', correct: 3 },
-    { id: 4, x: 200, y: 150, letter: 'A', correct: 4 },
-    { id: 5, x: 120, y: 170, letter: 'N', correct: 5 },
-    { id: 6, x: 80, y: 130, letter: 'C', correct: 6 },
-    { id: 7, x: 210, y: 200, letter: 'E', correct: 7 }
+    { id: 1, x: 80, y: 80, letter: 'R' },
+    { id: 2, x: 180, y: 60, letter: 'O' },
+    { id: 3, x: 270, y: 95, letter: 'M' },
+    { id: 4, x: 220, y: 150, letter: 'A' },
+    { id: 5, x: 140, y: 175, letter: 'N' },
+    { id: 6, x: 90, y: 135, letter: 'C' },
+    { id: 7, x: 240, y: 205, letter: 'E' }
   ];
 
   const correctAnswer = "ROMANCE";
 
   const handleHeartClick = (heartId: number) => {
     if (selectedPath.includes(heartId)) {
-      // Remove this heart and all hearts after it from the path
       const index = selectedPath.indexOf(heartId);
       setSelectedPath(selectedPath.slice(0, index));
     } else {
@@ -41,17 +40,16 @@ export function InteractiveRomance({ onComplete }: InteractiveRomanceProps) {
     }
   };
 
-  const getPathWord = () => {
-    return selectedPath
+  const getPathWord = () =>
+    selectedPath
       .map(id => hearts.find(h => h.id === id)?.letter || '')
       .join('');
-  };
 
   const checkPath = () => {
     const pathWord = getPathWord();
     if (pathWord.length >= 4) {
       setShowInput(true);
-      setUserInput(pathWord); // Automatisch das gefundene Wort ins Eingabefeld setzen
+      setUserInput(pathWord);
       toast.success(`Pfad gefunden: ${pathWord}`);
     } else {
       toast.error("Folge dem Pfad der Herzen...");
@@ -72,186 +70,158 @@ export function InteractiveRomance({ onComplete }: InteractiveRomanceProps) {
     setShowInput(false);
   };
 
+  const cardElement = (
+    <FlippableRatselCard
+      puzzleId="D"
+      title="Pfad des Herzens"
+      content={<RomanceRatselContent />}
+    />
+  );
+
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
-      {/* Rätselkarte */}
-      <div className="flex justify-center mb-6">
-        <FlippableRatselCard
-          puzzleId="D"
-          title="Pfad des Herzens"
-          content={<RomanceRatselContent />}
-        />
-      </div>
-
-      <motion.div
-        className="bg-center bg-cover bg-no-repeat min-h-[700px] w-[800px] rounded-[15px] mx-auto relative"
-        style={{ backgroundImage: `url('${imgComponent4}')` }}
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="min-h-[700px] relative w-[800px] flex flex-col items-center justify-center p-6">
-          <motion.div
-            className="font-['Jim_Nightshade:Regular',_sans-serif] text-center w-full"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <h2 className="text-[24px] text-red-800 mb-3">
-              Der Pfad des Herzens
-            </h2>
-            <p className="text-[12px] text-black mb-4">
-              Verbinde die Herzen in der richtigen Reihenfolge, um das Wort zu finden.
+    <div className="max-w-7xl mx-auto">
+      <PuzzleStageLayout card={cardElement}>
+        <motion.div
+          className="font-['Jim_Nightshade:Regular',_sans-serif] flex flex-col gap-8 items-center text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+        >
+          <div className="space-y-2 max-w-xl">
+            <h2 className="text-[32px] text-gray-900 font-bold">Der Pfad des Herzens</h2>
+            <p className="text-[14px] text-black/70">
+              Folge den leuchtenden Herzen in der richtigen Reihenfolge. Nur so offenbart sich das verborgene Wort.
             </p>
+          </div>
 
-            {/* Heart Puzzle */}
-            <div className="bg-white/90 p-4 rounded-lg shadow-inner w-full max-w-[400px] h-[280px] relative mx-auto mb-4">
-              {/* Hearts */}
-              {hearts.map((heart, index) => {
-                const isSelected = selectedPath.includes(heart.id);
-                const selectionIndex = selectedPath.indexOf(heart.id);
-                
-                return (
-                  <div 
-                    key={heart.id}
-                    className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
-                    style={{ left: `${heart.x}px`, top: `${heart.y}px` }}
-                    onClick={() => handleHeartClick(heart.id)}
-                  >
-                    <motion.div 
-                      className="relative"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {/* Heart shape */}
-                      <div className={`w-10 h-10 rounded-t-full transform rotate-45 relative transition-all ${
-                        isSelected 
-                          ? 'bg-gradient-to-b from-pink-400 to-red-500' 
-                          : 'bg-gradient-to-b from-pink-200 to-red-300'
-                      }`}>
-                        <div className={`w-10 h-10 rounded-t-full absolute -left-5 top-0 ${
-                          isSelected 
-                            ? 'bg-gradient-to-b from-pink-400 to-red-500' 
-                            : 'bg-gradient-to-b from-pink-200 to-red-300'
-                        }`}></div>
-                        <div className={`w-10 h-10 rounded-t-full absolute left-0 -top-5 ${
-                          isSelected 
-                            ? 'bg-gradient-to-b from-pink-400 to-red-500' 
-                            : 'bg-gradient-to-b from-pink-200 to-red-300'
-                        }`}></div>
-                      </div>
-                      
-                      {/* Letter */}
-                      <div className="absolute inset-0 flex items-center justify-center transform -rotate-45">
-                        <span className="font-['Jim_Nightshade'] text-[12px] font-bold text-white">
-                          {heart.letter}
-                        </span>
-                      </div>
-                      
-                      {/* Selection number */}
-                      {isSelected && (
-                        <div className="absolute -top-1 -right-1 w-5 h-5 bg-yellow-400 border-2 border-yellow-600 rounded-full flex items-center justify-center">
-                          <span className="font-['Jim_Nightshade'] text-[10px] font-bold text-black">
-                            {selectionIndex + 1}
-                          </span>
-                        </div>
-                      )}
-                    </motion.div>
-                  </div>
-                );
-              })}
-              
-              {/* Connecting lines */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none">
+          <div className="relative w-full max-w-xl">
+            <div
+              className="absolute inset-0 opacity-35 rounded-3xl"
+              style={{
+                backgroundImage: `url('${imgComponent4}')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
+            />
+            <div className="relative bg-white/85 border border-white/70 backdrop-blur rounded-3xl p-6 shadow-lg h-[320px]">
+              <div className="absolute inset-6">
                 {selectedPath.slice(0, -1).map((heartId, index) => {
                   const currentHeart = hearts.find(h => h.id === heartId);
                   const nextHeart = hearts.find(h => h.id === selectedPath[index + 1]);
                   if (!currentHeart || !nextHeart) return null;
-                  
+
                   return (
-                    <line 
-                      key={index}
-                      x1={currentHeart.x} 
-                      y1={currentHeart.y} 
-                      x2={nextHeart.x} 
-                      y2={nextHeart.y}
-                      stroke="#FF69B4" 
-                      strokeWidth="2" 
-                      strokeDasharray="4,4"
-                      opacity="0.8"
-                    />
+                    <svg key={`${heartId}-${nextHeart.id}`} className="absolute inset-0 w-full h-full pointer-events-none">
+                      <line
+                        x1={currentHeart.x}
+                        y1={currentHeart.y}
+                        x2={nextHeart.x}
+                        y2={nextHeart.y}
+                        stroke="#f472b6"
+                        strokeWidth={3}
+                        strokeDasharray="6 6"
+                        strokeLinecap="round"
+                        opacity={0.9}
+                      />
+                    </svg>
                   );
                 })}
-              </svg>
+
+                {hearts.map((heart) => {
+                  const isSelected = selectedPath.includes(heart.id);
+                  const selectionIndex = selectedPath.indexOf(heart.id);
+
+                  return (
+                    <button
+                      key={heart.id}
+                      className="absolute -translate-x-1/2 -translate-y-1/2"
+                      style={{ left: heart.x, top: heart.y }}
+                      onClick={() => handleHeartClick(heart.id)}
+                    >
+                      <motion.div
+                        className={`relative size-16 flex items-center justify-center transition-transform ${isSelected ? 'scale-105' : 'hover:scale-105'}`}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <div className={`absolute inset-0 rounded-[40px] rotate-45 ${
+                          isSelected ? 'bg-gradient-to-br from-pink-400 to-pink-600' : 'bg-gradient-to-br from-pink-200 to-pink-400'
+                        } shadow-lg`} />
+                        <div className="absolute inset-1 rounded-[36px] rotate-45 bg-white/30" />
+                        <span className="relative z-10 text-lg font-semibold text-white -rotate-45">
+                          {heart.letter}
+                        </span>
+                        {isSelected && (
+                          <span className="absolute -top-2 -right-2 z-20 w-6 h-6 rounded-full bg-yellow-300 border-2 border-yellow-500 text-xs font-bold text-yellow-900 flex items-center justify-center">
+                            {selectionIndex + 1}
+                          </span>
+                        )}
+                      </motion.div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
+          </div>
 
-            {/* Current Path */}
-            {selectedPath.length > 0 && (
-              <div className="mb-4">
-                <p className="text-[12px] text-black mb-2">Dein Pfad:</p>
-                <div className="flex justify-center gap-1 mb-2">
-                  {selectedPath.map((heartId, index) => {
-                    const heart = hearts.find(h => h.id === heartId);
-                    return (
-                      <div key={index} className="w-6 h-6 bg-pink-200 border-2 border-pink-500 rounded flex items-center justify-center">
-                        <span className="font-bold text-red-800 text-[12px]">{heart?.letter}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-                <p className="text-[10px] text-gray-600">
-                  Gefundenes Wort: <span className="font-bold">{getPathWord()}</span>
-                </p>
+          {selectedPath.length > 0 && (
+            <div className="bg-white/85 border border-pink-100 rounded-2xl px-5 py-3 shadow-inner text-sm text-black/70">
+              <p className="mb-1 font-semibold text-pink-600">Dein aktueller Pfad</p>
+              <div className="flex justify-center gap-2">
+                {selectedPath.map((heartId, index) => {
+                  const heart = hearts.find(h => h.id === heartId);
+                  return (
+                    <span key={index} className="w-7 h-7 bg-pink-100 border border-pink-400 rounded-full flex items-center justify-center text-pink-700 font-semibold">
+                      {heart?.letter}
+                    </span>
+                  );
+                })}
               </div>
-            )}
+              <p className="mt-2 text-xs text-black/50">
+                Gefundenes Wort: <span className="font-semibold text-pink-600">{getPathWord()}</span>
+              </p>
+            </div>
+          )}
 
-            {/* Controls */}
-            <div className="space-y-3">
-              <div className="flex gap-2 justify-center">
+          <div className="flex flex-col items-center gap-3 w-full max-w-md">
+            <div className="flex gap-3 justify-center">
+              <Button
+                onClick={resetPath}
+                className="h-11 rounded-full bg-pink-100 text-pink-600 hover:bg-pink-200 px-6 text-sm font-semibold border border-pink-200"
+              >
+                Zurücksetzen
+              </Button>
+              {!showInput && selectedPath.length > 0 && (
                 <Button
-                  onClick={resetPath}
-                  className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 font-['Jim_Nightshade'] text-[14px]"
+                  onClick={checkPath}
+                  className="h-11 rounded-full bg-pink-600 hover:bg-pink-500 px-6 text-sm font-semibold shadow-md shadow-pink-500/30"
                 >
-                  Zurücksetzen
+                  Pfad prüfen
                 </Button>
-                {!showInput && selectedPath.length > 0 && (
-                  <Button
-                    onClick={checkPath}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 font-['Jim_Nightshade'] text-[14px]"
-                  >
-                    Pfad prüfen
-                  </Button>
-                )}
-              </div>
-
-              {showInput && (
-                <div className="space-y-3">
-                  <p className="text-[12px] text-black italic">
-                    Was ist das vollständige Wort?
-                  </p>
-                  <Input
-                    value={userInput}
-                    onChange={(e) => setUserInput(e.target.value.toUpperCase())}
-                    placeholder="Vollständiges Wort eingeben"
-                    className="text-center font-bold max-w-xs mx-auto text-base"
-                  />
-                  <Button
-                    onClick={checkAnswer}
-                    disabled={userInput.length < 4}
-                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 font-['Jim_Nightshade'] text-[16px]"
-                  >
-                    Antwort prüfen
-                  </Button>
-                </div>
               )}
             </div>
-          </motion.div>
-        </div>
-        <div
-          aria-hidden="true"
-          className="absolute border-[6px] border-solid border-white inset-0 pointer-events-none rounded-[15px] shadow-[0px_4px_8px_0px_#9db3ce]"
-        />
-      </motion.div>
+
+            {showInput && (
+              <div className="w-full bg-white/85 border border-pink-100 rounded-2xl px-6 py-4 shadow-inner space-y-3">
+                <p className="text-[13px] text-black/70 italic">
+                  Trage das vollständige Wort ein.
+                </p>
+                <Input
+                  value={userInput}
+                  onChange={(e) => setUserInput(e.target.value.toUpperCase())}
+                  placeholder="Lösungswort"
+                  className="text-center text-lg font-semibold uppercase tracking-[0.3em]"
+                />
+                <Button
+                  onClick={checkAnswer}
+                  disabled={userInput.length < 4}
+                  className="h-11 rounded-full bg-pink-600 hover:bg-pink-500 px-8 text-sm font-semibold shadow-md shadow-pink-500/30 disabled:opacity-60"
+                >
+                  Antwort prüfen
+                </Button>
+              </div>
+            )}
+          </div>
+        </motion.div>
+      </PuzzleStageLayout>
     </div>
   );
 }
