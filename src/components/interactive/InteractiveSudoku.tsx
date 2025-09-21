@@ -19,7 +19,7 @@ interface InteractiveSudokuProps {
 }
 
 export function InteractiveSudoku({ gameState, onComplete }: InteractiveSudokuProps) {
-  const [nameInput, setNameInput] = useState('');
+  const [numberInput, setNumberInput] = useState('');
   const [calculatedPage, setCalculatedPage] = useState<number | null>(null);
   const [showSudoku, setShowSudoku] = useState(false);
   const [sudokuValues, setSudokuValues] = useState<{ [key: string]: string }>({});
@@ -27,7 +27,7 @@ export function InteractiveSudoku({ gameState, onComplete }: InteractiveSudokuPr
     A: null, B: null, C: null
   });
 
-  // Vordefiniertes Sudoku mit Lösung für Seite 56
+  // Vordefiniertes Sudoku mit Lösung für Seite 53
   const sudokuPuzzle = [
     [5, 3, 0, 0, 7, 0, 0, 0, 0],
     [6, 0, 0, 1, 9, 5, 0, 0, 0],
@@ -59,30 +59,20 @@ export function InteractiveSudoku({ gameState, onComplete }: InteractiveSudokuPr
     C: { row: 6, col: 4 }  // Wert: 3
   };
 
-  const calculatePageFromName = (name: string) => {
-    // LAURA = L(12) + A(1) + U(21) + R(18) + A(1) = 53, aber wir wollen 56
-    // Daher nehmen wir eine leicht angepasste Formel
-    let sum = 0;
-    for (let char of name.toUpperCase()) {
-      sum += char.charCodeAt(0) - 64; // A=1, B=2, etc.
-    }
-    return sum + 3; // +3 um auf 56 zu kommen
-  };
-
-  const handleNameSubmit = () => {
-    if (nameInput.length !== 5) {
-      toast.error('Der Name muss genau 5 Buchstaben haben!');
+  const handleNumberSubmit = () => {
+    const number = parseInt(numberInput);
+    if (isNaN(number)) {
+      toast.error('Bitte gib eine gültige Zahl ein!');
       return;
     }
-    
-    const page = calculatePageFromName(nameInput);
-    setCalculatedPage(page);
-    
-    if (page === 56) {
-      toast.success(`Perfekt! ${nameInput} führt zu Seite ${page}!`);
+
+    setCalculatedPage(number);
+
+    if (number === 56) {
+      toast.success(`Perfekt! Die Zahl ${number} ist korrekt!`);
       setTimeout(() => setShowSudoku(true), 1000);
     } else {
-      toast.warning(`${nameInput} führt zu Seite ${page}. Versuche es mit "LAURA"!`);
+      toast.warning(`Die Zahl ${number} ist nicht korrekt. Löse das Rätsel, um die richtige Seitenzahl zu finden!`);
     }
   };
 
@@ -145,17 +135,17 @@ export function InteractiveSudoku({ gameState, onComplete }: InteractiveSudokuPr
           <div className="bg-white/95 border-2 border-pink-200 rounded-2xl p-6 shadow-xl mb-4">
             <h2 className="text-[32px] text-gray-900 font-bold mb-3">Das erste Rätsel</h2>
             <p className="text-[16px] text-gray-800 max-w-md leading-relaxed font-medium">
-              Verwandle deinen Namen in Zahlen. Nur wenn die Summe 56 ergibt, öffnet sich das Buch der Göttin.
+              Auf welcher Seite findest du das Sudoku?
             </p>
           </div>
 
           <div className="flex flex-col gap-4 w-full max-w-xs">
             <Input
-              value={nameInput}
-              onChange={(e) => setNameInput(e.target.value.toUpperCase())}
-              placeholder="DEIN NAME"
-              className="text-center text-xl font-bold uppercase tracking-[0.2em] bg-white border-2 border-pink-300 focus:border-pink-500 shadow-lg h-14 text-gray-800"
-              maxLength={5}
+              type="number"
+              value={numberInput}
+              onChange={(e) => setNumberInput(e.target.value)}
+              placeholder="Seitenzahl"
+              className="text-center text-xl font-bold bg-white border-2 border-pink-300 focus:border-pink-500 shadow-lg h-14 text-gray-800"
             />
 
             {calculatedPage && (
@@ -165,23 +155,23 @@ export function InteractiveSudoku({ gameState, onComplete }: InteractiveSudokuPr
                 animate={{ opacity: 1 }}
               >
                 <p className="text-pink-800 font-bold text-sm">
-                  {nameInput} = {nameInput.split('').map(char => `${char}(${char.charCodeAt(0) - 64})`).join(' + ')} = Seite {calculatedPage}
+                  Eingegebene Seitenzahl: {calculatedPage}
                 </p>
               </motion.div>
             )}
 
             <Button
-              onClick={handleNameSubmit}
-              disabled={nameInput.length !== 5}
+              onClick={handleNumberSubmit}
+              disabled={!numberInput}
               className="h-14 rounded-xl bg-pink-600 hover:bg-pink-700 text-white text-lg font-bold shadow-xl border-2 border-pink-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Seite berechnen
+              Seite prüfen
             </Button>
           </div>
 
           <div className="bg-pink-50 border-2 border-pink-200 rounded-lg p-4 max-w-sm">
             <p className="text-sm text-gray-700 font-medium leading-relaxed">
-              A=1, B=2 ... Z=26. Die richtige Summe weist dir den Weg.
+              Löse das Rätsel, um die richtige Seitenzahl zu finden.
             </p>
           </div>
         </motion.div>

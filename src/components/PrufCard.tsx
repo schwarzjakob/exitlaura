@@ -6,8 +6,7 @@ export function PrufCard() {
   const hiddenMessages = {
     A: { correctNumber: 5, message: "ÖFF" },
     B: { correctNumber: 7, message: "NE " },
-    C: { correctNumber: 9, message: "UMS" },
-    full: "ÖFFNE UMSCHLAG B"
+    C: { correctNumber: 9, message: "A" },
   };
 
   return (
@@ -101,12 +100,6 @@ export function PrufCard() {
                   </div>
                 </div>
               ))}
-            </div>
-
-            {/* Hinweis für Vollständige Nachricht */}
-            <div className="font-['Jim_Nightshade:Regular',_sans-serif] text-[12px] text-black mt-4 text-center leading-[14px]">
-              <p>Zusammengesetzt ergibt sich:</p>
-              <p className="italic text-red-800">{hiddenMessages.full}</p>
             </div>
 
             {/* Rätsel-Kennzeichnung */}

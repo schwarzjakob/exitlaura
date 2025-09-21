@@ -41,8 +41,7 @@ export function InteractiveWächter({
   const hiddenMessages = {
     A: { correctNumber: 4, message: "ÖFF" },
     B: { correctNumber: 5, message: "NE " },
-    C: { correctNumber: 3, message: "UMS" },
-    full: "ÖFFNE UMSCHLAG B",
+    C: { correctNumber: 3, message: "A" },
   };
 
   const handleNumberClick = (
@@ -289,7 +288,7 @@ export function InteractiveWächter({
               }
               className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 font-['Jim_Nightshade'] text-[18px]"
             >
-              Nachricht vervollständigen
+              Nachricht Bestätigen
             </Button>
           </motion.div>
           </div>

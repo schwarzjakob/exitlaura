@@ -116,11 +116,7 @@ export function InteractiveFinalePuzzle({ onComplete }: InteractiveFinalePuzzleP
                         <span className="text-3xl">{fragment.symbol}</span>
                         <span className="text-[16px] text-pink-700 font-bold">{fragment.name}</span>
                         <span className="text-xs text-gray-600 font-medium">{fragment.description}</span>
-                        {isSelected && (
-                          <span className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-pink-600 text-white text-sm font-bold flex items-center justify-center shadow-lg border-2 border-white">
-                            {selectionIndex + 1}
-                          </span>
-                        )}
+                        
                       </motion.button>
                     );
                   })}
