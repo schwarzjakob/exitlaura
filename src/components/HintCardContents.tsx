@@ -58,20 +58,25 @@ export const KreuzwortHintContent = () => (
 
 export const AcrosticHintContent = () => (
   <>
-    <div className="text-center mb-4 p-3 bg-yellow-100 border-2 border-yellow-400 rounded-lg">
-      <h4 className="text-[16px] font-bold text-yellow-800 mb-2">💡 Hinweis</h4>
-      <p className="text-[13px] text-yellow-700">
-        Finde das Podest der Maske – dort wartet der Weg zu Päckchen C.
-      </p>
+    <div className="text-center mb-4 p-3 bg-pink-100 border-2 border-pink-400 rounded-lg">
+      <h4 className="text-[16px] font-bold text-pink-800 mb-2">✨ Hinweise der Göttin</h4>
+      <ul className="space-y-2 text-[13px] text-pink-700 text-left">
+        <li className="flex gap-2 items-start">
+          <span className="text-pink-500 text-sm leading-none">✦</span>
+          <span>Wo ewiger Winter herrscht, dort offenbart sich das Geheimnis.</span>
+        </li>
+        <li className="flex gap-2 items-start">
+          <span className="text-pink-500 text-sm leading-none">✦</span>
+          <span>Das Zentrum birgt mehr Wahrheit als die äußeren Grenzen.</span>
+        </li>
+        <li className="flex gap-2 items-start">
+          <span className="text-pink-500 text-sm leading-none">✦</span>
+          <span>Drei Wächter, drei Pfade – doch nur einer führt zur stillen Maske.</span>
+        </li>
+      </ul>
     </div>
+
     
-    <div className="text-center mb-4 p-3 bg-blue-100 border-2 border-blue-400 rounded-lg">
-      <h4 className="text-[16px] font-bold text-blue-800 mb-2">🎯 Tipp</h4>
-      <p className="text-[13px] text-blue-700">
-        Spüre den Frost: Nicht im Wind des Nordpfades, nicht an den äußeren Säulen. 
-        Wer den inneren Kreis der Eishöhle findet, hört die Göttin flüstern.
-      </p>
-    </div>
   </>
 );
 

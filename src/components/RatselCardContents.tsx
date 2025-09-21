@@ -55,19 +55,16 @@ export const KreuzwortRatselContent = () => (
 export const AcrosticRatselContent = () => (
   <>
     <p className="mb-3">
-      In der Halle der Stille stehen neun Podeste: Nordpfad, Waldlichtung, Eishöhle – jeder Ort trägt drei Kreise.
-      <br />
-      Nur ein Platz bewahrt die Maske der Ruhe.
+    Drei Kristalle schweigen im Frost.
+    <br /><br />
+    Der erste zerbricht im Wind,
+    <br />
+    der letzte verflüchtigt sich im Schatten.
+    <br /><br />
+    Nur wer dem Herz des Winters lauscht,
+    findet den Weg zur Maske.
     </p>
-    
-    <p className="mb-3">
-      Spüre den Frost: Nicht im Wind des Nordpfades, nicht an den äußeren Säulen –
-      <br />
-      dort rascheln nur Blätter.
-      <br />
-      Wer den inneren Kreis der Eishöhle findet, hört die Göttin flüstern.
-    </p>
-    
+
   </>
 );
 

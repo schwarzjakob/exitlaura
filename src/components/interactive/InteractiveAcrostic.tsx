@@ -29,11 +29,6 @@ export function InteractiveAcrostic({ onComplete }: InteractiveAcrosticProps) {
     { id: 2, label: 'Spiegelgang', icon: '🪞' }
   ];
 
-  const hints = [
-    'Die Maske ruht nicht im Nordpfad.',
-    'Sie liegt nicht auf den Außensäulen, sondern im inneren Kreis.',
-    'In der Waldlichtung findest du nur raschelnde Blätter – suche weiter in der Kälte.'
-  ];
 
   const correctCell = { row: 2, col: 1 };
 
@@ -102,83 +97,232 @@ export function InteractiveAcrostic({ onComplete }: InteractiveAcrosticProps) {
             <div className="space-y-2 max-w-xl">
               <h2 className="text-[32px] text-gray-900 font-bold">Tempel der Stille</h2>
               <p className="text-[16px] text-gray-800 font-medium">
-                Drei Hallen, drei Kreise. Nur ein Podest trägt die Maske der Ruhe – folge den Hinweisen der Göttin.
+                Im Herzen des Tempels warten drei Wächter. Neun Podeste bergen ihre Geheimnisse – doch nur eines trägt das Gesicht der Göttin.
               </p>
             </div>
 
             <div className="w-full flex flex-col lg:flex-row gap-8 items-start">
               <div className="flex-1 w-full">
-                <div className="grid grid-cols-4 gap-3 min-w-0">
-                  {/* Header row */}
-                  <div className="h-14 flex items-center justify-center">
-                    <span className="text-sm font-semibold text-gray-500">Ort / Säule</span>
+                {/* Temple Layout */}
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-gray-700 mb-2">Die drei Wächter erwachen</h3>
+                    <p className="text-sm text-gray-600">Wähle weise – das Schicksal der Maske liegt in deinen Händen</p>
                   </div>
-                  {columns.map((column) => (
-                    <div
-                      key={column.id}
-                      className="h-14 flex flex-col items-center justify-center rounded-xl border border-pink-200 bg-gradient-to-br from-pink-50 to-pink-100"
-                    >
-                      <span className="text-lg">{column.icon}</span>
-                      <span className="text-[10px] uppercase tracking-wider text-pink-600 font-semibold text-center">
-                        {column.label}
-                      </span>
-                    </div>
-                  ))}
 
-                  {/* Podium grid */}
-                  {rows.map((row) => (
-                    <Fragment key={row.id}>
-                      <div className="h-20 flex flex-col items-center justify-center rounded-xl border border-purple-200 bg-gradient-to-br from-purple-50 to-purple-100">
-                        <span className="text-lg">{row.icon}</span>
-                        <span className="text-[10px] text-purple-700 font-semibold text-center leading-tight">
-                          {row.label}
-                        </span>
-                      </div>
-                      {columns.map((column) => {
-                        const key = buildKey(row.id, column.id);
-                        const isSelected = selectedCell?.row === row.id && selectedCell?.col === column.id;
-                        const isAttempted = attemptedCells[key] === 'wrong';
-                        const isCorrect = solved && row.id === correctCell.row && column.id === correctCell.col;
+                  <div className="grid grid-cols-3 gap-8 min-h-[400px]">
+                    {rows.map((row) => {
+                      // Theme styling for each hall
+                      const hallThemes = {
+                        0: { // Nordpfad
+                          bg: 'bg-gradient-to-br from-blue-50 via-slate-50 to-blue-100',
+                          border: 'border-blue-200',
+                          accent: 'text-blue-700',
+                          podiumBase: 'from-blue-100 to-blue-200',
+                          podiumBorder: 'border-blue-300'
+                        },
+                        1: { // Waldlichtung
+                          bg: 'bg-gradient-to-br from-green-50 via-emerald-50 to-green-100',
+                          border: 'border-green-200',
+                          accent: 'text-green-700',
+                          podiumBase: 'from-green-100 to-green-200',
+                          podiumBorder: 'border-green-300'
+                        },
+                        2: { // Eishöhle
+                          bg: 'bg-gradient-to-br from-cyan-50 via-blue-50 to-cyan-100',
+                          border: 'border-cyan-200',
+                          accent: 'text-cyan-700',
+                          podiumBase: 'from-cyan-100 to-cyan-200',
+                          podiumBorder: 'border-cyan-300'
+                        }
+                      };
 
-                        return (
-                          <motion.button
-                            key={key}
-                            onClick={() => handleCellSelect(row.id, column.id)}
-                            className={`h-20 rounded-xl border-2 transition-all flex flex-col items-center justify-center gap-1 shadow-md hover:shadow-lg ${
-                              isCorrect
-                                ? 'bg-gradient-to-br from-emerald-100 to-emerald-200 border-emerald-600 text-emerald-800 shadow-emerald-200'
-                                : isSelected
-                                ? 'bg-gradient-to-br from-pink-100 to-pink-200 border-pink-600 text-pink-800 shadow-pink-200'
-                                : isAttempted
-                                ? 'bg-gradient-to-br from-rose-100 to-rose-200 border-rose-500 text-rose-700 shadow-rose-200'
-                                : 'bg-gradient-to-br from-white to-pink-50 border-pink-300 hover:border-pink-500 hover:bg-pink-100'
-                            } ${solved ? 'cursor-default' : 'cursor-pointer hover:scale-105'}`}
-                            disabled={solved}
-                            whileHover={!solved ? { scale: 1.05 } : {}}
-                            whileTap={!solved ? { scale: 0.95 } : {}}
-                          >
-                            <span className="text-2xl">{isCorrect ? '🎭✨' : '🎭'}</span>
-                            <span className="text-[9px] text-gray-600 text-center font-medium">{row.icon}{column.icon}</span>
-                          </motion.button>
-                        );
-                      })}
-                    </Fragment>
-                  ))}
+                      const theme = hallThemes[row.id as keyof typeof hallThemes];
+
+                      return (
+                        <div key={row.id} className={`${theme.bg} ${theme.border} border-3 rounded-3xl p-8 shadow-2xl relative overflow-hidden`}>
+                          {/* Hall Header */}
+                          <div className="text-center mb-6 relative z-10">
+                            <div className={`text-4xl mb-3 drop-shadow-lg`}>{row.icon}</div>
+                            <h4 className={`font-bold text-xl ${theme.accent} drop-shadow-sm`}>{row.label}</h4>
+                            <p className={`text-xs ${theme.accent} opacity-75 italic mt-1`}>
+                              {row.id === 0 && "Wo die Winde der Zeit wehen..."}
+                              {row.id === 1 && "Im Schatten der Bäume verborgen..."}
+                              {row.id === 2 && "In ewiger Kälte erstarrt..."}
+                            </p>
+                          </div>
+
+                          {/* Temple Room Layout */}
+                          <div className="relative h-64 mx-4">
+                            {/* Room Architecture */}
+                            <div className={`absolute inset-0 ${theme.bg} rounded-2xl border-2 ${theme.border} shadow-inner`}>
+                              {/* Floor Pattern */}
+                              <div className="absolute inset-2 bg-gradient-to-br from-white/30 to-transparent rounded-xl"></div>
+
+                              {/* Podiums positioned in temple layout */}
+                              {columns.map((column, colIndex) => {
+                                const key = buildKey(row.id, column.id);
+                                const isSelected = selectedCell?.row === row.id && selectedCell?.col === column.id;
+                                const isAttempted = attemptedCells[key] === 'wrong';
+                                const isCorrect = solved && row.id === correctCell.row && column.id === correctCell.col;
+
+                                // Position podiums in temple formation
+                                const positions = [
+                                  { left: '15%', top: '60%' },  // Äußere Säule (left)
+                                  { left: '50%', top: '30%' },  // Innerer Kreis (center)
+                                  { left: '85%', top: '60%' }   // Spiegelgang (right)
+                                ];
+
+                                const position = positions[colIndex];
+                                const isInnerCircle = column.id === 1;
+
+                                return (
+                                  <div key={key} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: position.left, top: position.top }}>
+                                    {/* Pulsing glow effect for selected button */}
+                                    {isSelected && (
+                                      <motion.div
+                                        className="absolute inset-0 w-20 h-20 -translate-x-2 -translate-y-2 rounded-full bg-yellow-400/30"
+                                        animate={{
+                                          scale: [1, 1.3, 1],
+                                          opacity: [0.3, 0.6, 0.3]
+                                        }}
+                                        transition={{
+                                          duration: 2,
+                                          repeat: Infinity,
+                                          ease: "easeInOut"
+                                        }}
+                                      />
+                                    )}
+                                    
+                                    <motion.button
+                                      onClick={() => handleCellSelect(row.id, column.id)}
+                                      className={`w-16 h-16 rounded-full border-3 transition-all shadow-lg ${
+                                        isCorrect
+                                          ? 'bg-gradient-to-br from-emerald-300 via-emerald-200 to-emerald-400 border-emerald-600 text-emerald-800 shadow-emerald-300/50'
+                                          : isSelected
+                                          ? 'bg-gradient-to-br from-yellow-300 via-yellow-200 to-yellow-400 border-yellow-600 text-yellow-800 shadow-yellow-300/70 ring-4 ring-yellow-400/50 ring-offset-2 ring-offset-white'
+                                          : isAttempted
+                                          ? 'bg-gradient-to-br from-rose-300 via-rose-200 to-rose-400 border-rose-500 text-rose-700 shadow-rose-300/50'
+                                          : `bg-gradient-to-br ${theme.podiumBase} ${theme.podiumBorder} hover:shadow-xl shadow-lg`
+                                      } ${solved ? 'cursor-default' : 'cursor-pointer hover:scale-110'}`}
+                                      disabled={solved}
+                                      whileHover={!solved ? { scale: isInnerCircle ? 1.15 : 1.1 } : {}}
+                                      whileTap={!solved ? { scale: 0.95 } : {}}
+                                      animate={isSelected ? {
+                                        scale: [1, 1.1, 1],
+                                        boxShadow: [
+                                          '0 0 0 0 rgba(251, 191, 36, 0.7)',
+                                          '0 0 0 10px rgba(251, 191, 36, 0)',
+                                          '0 0 0 0 rgba(251, 191, 36, 0)'
+                                        ]
+                                      } : {}}
+                                      transition={isSelected ? {
+                                        scale: { duration: 1.5, repeat: Infinity, ease: "easeInOut" },
+                                        boxShadow: { duration: 1.5, repeat: Infinity, ease: "easeInOut" }
+                                      } : {}}
+                                    >
+                                    <div className="flex flex-col items-center justify-center h-full relative">
+                                      <span className="text-2xl drop-shadow-sm">
+                                        {isCorrect ? '🎭✨' : '🎭'}
+                                      </span>
+
+                                      {/* Position indicator */}
+                                      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[8px] bg-white/80 px-2 py-1 rounded-full shadow-sm">
+                                        <span className="text-xs">{column.icon}</span>
+                                      </div>
+
+                                    </div>
+                                    </motion.button>
+                                  </div>
+                                );
+                              })}
+
+                              {/* Atmospheric effects */}
+                              {row.id === 0 && ( // Nordpfad - wind effects
+                                <div className="absolute inset-0 pointer-events-none">
+                                  {[...Array(5)].map((_, i) => (
+                                    <motion.div
+                                      key={i}
+                                      className="absolute w-1 h-1 bg-blue-300/60 rounded-full"
+                                      animate={{
+                                        x: [0, 100, 0],
+                                        y: [Math.random() * 50, Math.random() * 50],
+                                        opacity: [0, 1, 0]
+                                      }}
+                                      transition={{
+                                        duration: 3 + Math.random() * 2,
+                                        repeat: Infinity,
+                                        delay: Math.random() * 2
+                                      }}
+                                      style={{
+                                        left: `${Math.random() * 80}%`,
+                                        top: `${Math.random() * 80}%`
+                                      }}
+                                    />
+                                  ))}
+                                </div>
+                              )}
+
+                              {row.id === 1 && ( // Waldlichtung - leaf effects
+                                <div className="absolute inset-0 pointer-events-none">
+                                  {[...Array(3)].map((_, i) => (
+                                    <motion.div
+                                      key={i}
+                                      className="absolute text-green-500/40 text-sm"
+                                      animate={{
+                                        y: [0, 20, 0],
+                                        rotate: [0, 360],
+                                        opacity: [0.3, 0.7, 0.3]
+                                      }}
+                                      transition={{
+                                        duration: 4 + Math.random() * 2,
+                                        repeat: Infinity,
+                                        delay: Math.random() * 3
+                                      }}
+                                      style={{
+                                        left: `${20 + Math.random() * 60}%`,
+                                        top: `${10 + Math.random() * 60}%`
+                                      }}
+                                    >
+                                      🍃
+                                    </motion.div>
+                                  ))}
+                                </div>
+                              )}
+
+                              {row.id === 2 && ( // Eishöhle - ice effects
+                                <div className="absolute inset-0 pointer-events-none">
+                                  {[...Array(4)].map((_, i) => (
+                                    <motion.div
+                                      key={i}
+                                      className="absolute w-2 h-2 bg-cyan-200/60 rounded-full"
+                                      animate={{
+                                        scale: [0.5, 1, 0.5],
+                                        opacity: [0.3, 0.8, 0.3]
+                                      }}
+                                      transition={{
+                                        duration: 2 + Math.random(),
+                                        repeat: Infinity,
+                                        delay: Math.random() * 2
+                                      }}
+                                      style={{
+                                        left: `${20 + Math.random() * 60}%`,
+                                        top: `${20 + Math.random() * 60}%`
+                                      }}
+                                    />
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="w-full max-w-xs bg-white/85 border border-pink-100 rounded-3xl p-6 shadow-lg text-left">
-              <h3 className="text-[16px] text-pink-600 font-semibold mb-4 text-center">Hinweise der Göttin</h3>
-              <ul className="space-y-3 text-[12px] text-black/75">
-                {hints.map((hint, index) => (
-                  <li key={index} className="flex gap-3 items-start">
-                    <span className="text-pink-500 text-lg leading-none">✦</span>
-                    <span>{hint}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
 
             <div className="flex flex-col items-center gap-3">
             {!solved && (
@@ -201,14 +345,29 @@ export function InteractiveAcrostic({ onComplete }: InteractiveAcrosticProps) {
 
             {solved && (
               <motion.div
-                className="mt-2 p-4 bg-emerald-100 border border-emerald-400 rounded-2xl max-w-sm"
-                initial={{ opacity: 0, scale: 0.85 }}
-                animate={{ opacity: 1, scale: 1 }}
+                className="mt-6 p-6 bg-gradient-to-br from-emerald-100 via-emerald-50 to-cyan-100 border-2 border-emerald-400 rounded-2xl max-w-md shadow-xl"
+                initial={{ opacity: 0, scale: 0.85, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
               >
-                <p className="text-xl mb-1">🎭</p>
-                <p className="text-[14px] text-emerald-700 font-semibold">
-                  Du hast die Maske der Stille gefunden. Die Göttin gewährt dir: Öffne nun Päckchen&nbsp;C.
-                </p>
+                <div className="text-center">
+                  <motion.div
+                    className="text-4xl mb-3"
+                    animate={{
+                      scale: [1, 1.2, 1],
+                      rotate: [0, 5, -5, 0]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    🎭✨
+                  </motion.div>
+                  <h4 className="text-emerald-800 font-bold text-lg mb-2">Die Maske der Stille gefunden!</h4>
+                  <p className="text-[14px] text-emerald-700 font-semibold leading-relaxed">
+                    In der Eishöhle, im inneren Kreis, ruhte die Maske der Göttin.
+                    <br />
+                    <span className="text-cyan-700">Öffne nun Päckchen C.</span>
+                  </p>
+                </div>
               </motion.div>
             )}
             </div>
