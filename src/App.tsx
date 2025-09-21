@@ -1,4 +1,5 @@
-import { useState } from 'react';
+
+import {React, useState } from 'react';
 import { Toaster } from './components/ui/sonner';
 import RatselTemplate from './imports/RatselTemplate-1-35';
 import Frame1 from './imports/Frame1';

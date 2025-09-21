@@ -8,9 +8,10 @@ interface PuzzleStageLayoutProps {
 
 export function PuzzleStageLayout({ card, children }: PuzzleStageLayoutProps) {
   return (
-    <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start justify-center w-full max-w-7xl mx-auto px-4">
+    <div className="flex flex-row gap-6 lg:gap-8 items-start justify-center w-full max-w-7xl mx-auto px-4">
       {/* Card Section - Left Side */}
-      <div className="w-full lg:w-[380px] flex justify-center lg:justify-start shrink-0 order-1 lg:order-1">
+      <div className="w-[380px] flex justify-start shrink-0">
+
         <motion.div
           className="relative"
           initial={{ opacity: 0, x: -20 }}
@@ -25,7 +26,7 @@ export function PuzzleStageLayout({ card, children }: PuzzleStageLayoutProps) {
 
       {/* Game Content Section - Right Side */}
       <motion.div
-        className="flex-1 w-full min-w-0 order-2 lg:order-2"
+        className="flex-1 min-w-0" 
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
