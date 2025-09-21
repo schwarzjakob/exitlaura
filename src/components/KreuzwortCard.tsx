@@ -2,12 +2,16 @@ import imgComponent4 from "figma:asset/4f048a806263f8bb83388f2709782db27449187b.
 import imgBackground from "figma:asset/dcefe1de85a1f7e1e77f6f4f86686fc1468ca321.png";
 
 export function KreuzwortCard() {
-  // Kreuzworträtsel-Daten für Zelda/Anime-Begriffe
+  // Kreuzworträtsel-Daten für Zelda-Begriffe
   const crosswordClues = [
-    { number: 1, direction: 'horizontal', clue: 'Held mit grünem Mut (4)', answer: 'LINK' },
-    { number: 2, direction: 'vertical', clue: 'Heiliges Dreieck (8)', answer: 'TRIFORCE' },
-    { number: 3, direction: 'horizontal', clue: 'Kämpfer wider Titanen (Vorname) (4)', answer: 'EREN' },
-    { number: 4, direction: 'vertical', clue: 'Ruf der Klinge (4)', answer: 'HIEB' }
+    { number: 1, direction: 'horizontal', clue: 'Grüne Kleidung des Helden (5)', answer: 'TUNIC' },
+    { number: 2, direction: 'horizontal', clue: 'Vogelvolk in Hyrule (4)', answer: 'RITO' },
+    { number: 3, direction: 'horizontal', clue: 'Weise Beschützerin von Zelda (4)', answer: 'IMPA' },
+    { number: 4, direction: 'horizontal', clue: 'Gefährtin mit Feenstaub (5)', answer: 'FAIRY' },
+    { number: 5, direction: 'horizontal', clue: 'Klassischer Gegner, spuckt Felsen (7)', answer: 'OCTOROK' },
+    { number: 6, direction: 'horizontal', clue: 'Währung in Hyrule (5)', answer: 'RUPEE' },
+    { number: 7, direction: 'horizontal', clue: 'Hühnerlegende – fass sie nicht! (5)', answer: 'CUCCO' },
+    { number: 8, direction: 'horizontal', clue: 'Links treues Pferd (5)', answer: 'EPONA' }
   ];
 
   return (
@@ -28,10 +32,14 @@ export function KreuzwortCard() {
               <div className="mt-4 p-2 bg-black/10 rounded">
                 <p className="text-[10px] leading-[12px]">
                   <strong>Hinweise:</strong><br />
-                  1→ Held mit grünem Mut (4)<br />
-                  2↓ Heiliges Dreieck (8)<br />
-                  3→ Kämpfer wider Titanen (Vorname) (4)<br />
-                  4↓ Ruf der Klinge (4)
+                  1→ Grüne Kleidung des Helden (5)<br />
+                  2→ Vogelvolk in Hyrule (4)<br />
+                  3→ Weise Beschützerin von Zelda (4)<br />
+                  4→ Gefährtin mit Feenstaub (5)<br />
+                  5→ Klassischer Gegner, spuckt Felsen (7)<br />
+                  6→ Währung in Hyrule (5)<br />
+                  7→ Hühnerlegende – fass sie nicht! (5)<br />
+                  8→ Links treues Pferd (5)
                 </p>
               </div>
             </div>
@@ -59,26 +67,38 @@ export function KreuzwortCard() {
                   const row = Math.floor(i / 8);
                   const col = i % 8;
                   
-                  // Definiere die Kreuzwort-Struktur
+                  // Definiere die Kreuzwort-Struktur basierend auf dem 8x8 Raster
                   const isActive = 
-                    // LINK (horizontal, row 1, cols 0-3)
+                    // TUNIC (row 0, cols 0-4)
+                    (row === 0 && col >= 0 && col <= 4) ||
+                    // RITO (row 1, cols 0-3)
                     (row === 1 && col >= 0 && col <= 3) ||
-                    // TRIFORCE (vertical, col 2, rows 0-7)
-                    (col === 2 && row >= 0 && row <= 7) ||
-                    // EREN (horizontal, row 3, cols 1-4)
-                    (row === 3 && col >= 1 && col <= 4) ||
-                    // HIEB (vertical, col 4, rows 2-6)
-                    (col === 4 && row >= 2 && row <= 6);
+                    // IMPA (row 2, cols 0-3)
+                    (row === 2 && col >= 0 && col <= 3) ||
+                    // FAIRY (row 3, cols 0-4)
+                    (row === 3 && col >= 0 && col <= 4) ||
+                    // OCTOROK (row 4, cols 0-6)
+                    (row === 4 && col >= 0 && col <= 6) ||
+                    // RUPEE (row 5, cols 0-4)
+                    (row === 5 && col >= 0 && col <= 4) ||
+                    // CUCCO (row 6, cols 0-4)
+                    (row === 6 && col >= 0 && col <= 4) ||
+                    // EPONA (row 7, cols 0-4)
+                    (row === 7 && col >= 0 && col <= 4);
                   
                   // Zahlen für den Start der Wörter
                   const hasNumber = 
-                    (row === 1 && col === 0) ? '1' :
-                    (row === 0 && col === 2) ? '2' :
-                    (row === 3 && col === 1) ? '3' :
-                    (row === 2 && col === 4) ? '4' : '';
+                    (row === 0 && col === 0) ? '1' :
+                    (row === 1 && col === 0) ? '2' :
+                    (row === 2 && col === 0) ? '3' :
+                    (row === 3 && col === 0) ? '4' :
+                    (row === 4 && col === 0) ? '5' :
+                    (row === 5 && col === 0) ? '6' :
+                    (row === 6 && col === 0) ? '7' :
+                    (row === 7 && col === 0) ? '8' : '';
                   
-                  // Markiere die Lösung TRIFORCE
-                  const isTriforce = col === 2 && row >= 0 && row <= 7;
+                  // Markiere die Lösung TRIFORCE (erste Spalte)
+                  const isTriforce = col === 0;
                   
                   return (
                     <div
@@ -105,7 +125,7 @@ export function KreuzwortCard() {
 
             {/* Lösungshinweis */}
             <div className="font-['Jim_Nightshade:Regular',_sans-serif] text-[11px] text-black mt-3 text-center leading-[13px]">
-              <p>Das mittlere Wort führt weiter</p>
+              <p>Aus den ersten Buchstaben wird das Triforce geboren</p>
             </div>
 
             {/* Rätsel-Kennzeichnung */}

@@ -24,17 +24,33 @@ export const SudokuHintContent = () => (
 export const KreuzwortHintContent = () => (
   <>
     <div className="text-center mb-4 p-3 bg-yellow-100 border-2 border-yellow-400 rounded-lg">
-      <h4 className="text-[16px] font-bold text-yellow-800 mb-2">💡 Hinweis</h4>
+      <h4 className="text-[16px] font-bold text-yellow-800 mb-2">💡 Lösungsspalte</h4>
       <p className="text-[13px] text-yellow-700">
-        Gesucht: 8 Buchstaben - Das Symbol der Macht
+        Die erste Spalte (gelb markiert) enthält die Lösung! 
+        Die ersten Buchstaben der Wörter bilden das berühmte Symbol der Macht.
       </p>
     </div>
     
     <div className="text-center mb-4 p-3 bg-blue-100 border-2 border-blue-400 rounded-lg">
-      <h4 className="text-[16px] font-bold text-blue-800 mb-2">🎯 Tipp</h4>
+      <h4 className="text-[16px] font-bold text-blue-800 mb-2">🎯 Zelda-Begriffe</h4>
       <p className="text-[13px] text-blue-700">
-        Das mittlere Wort führt weiter. Es ist das berühmte Symbol, 
-        das Link in der Zelda-Serie stets bei sich trägt.
+        • Grüne Kleidung des Helden → TUNIC<br/>
+        • Vogelvolk in Hyrule → RITO<br/>
+        • Weise Beschützerin → IMPA<br/>
+        • Gefährtin mit Feenstaub → FAIRY<br/>
+        • Klassischer Gegner → OCTOROK<br/>
+        • Währung in Hyrule → RUPEE<br/>
+        • Hühnerlegende → CUCCO<br/>
+        • Links treues Pferd → EPONA
+      </p>
+    </div>
+
+    <div className="text-center mb-4 p-3 bg-green-100 border-2 border-green-400 rounded-lg">
+      <h4 className="text-[16px] font-bold text-green-800 mb-2">🏆 Das Triforce</h4>
+      <p className="text-[13px] text-green-700">
+        T-R-I-F-O-R-C-E - Das heilige Symbol aus drei Dreiecken, 
+        das Macht, Weisheit und Mut vereint. Es ist das Herzstück 
+        der Zelda-Legende!
       </p>
     </div>
   </>
