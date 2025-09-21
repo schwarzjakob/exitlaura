@@ -11,7 +11,6 @@ export function PuzzleStageLayout({ card, children }: PuzzleStageLayoutProps) {
     <div className="flex flex-row gap-6 lg:gap-8 items-start justify-center w-full max-w-7xl mx-auto px-4">
       {/* Card Section - Left Side */}
       <div className="w-[380px] flex justify-start shrink-0">
-
         <motion.div
           className="relative"
           initial={{ opacity: 0, x: -20 }}
@@ -26,7 +25,7 @@ export function PuzzleStageLayout({ card, children }: PuzzleStageLayoutProps) {
 
       {/* Game Content Section - Right Side */}
       <motion.div
-        className="flex-1 min-w-0" 
+        className="flex-1 min-w-0"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}

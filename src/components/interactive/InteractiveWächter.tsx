@@ -1,8 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { toast } from "sonner@2.0.3";
 import imgComponent4 from "figma:asset/4f048a806263f8bb83388f2709782db27449187b.png";
 import { Button } from "../ui/button";
+import { BackgroundBox } from "../ui/BackgroundBox";
 import type { GameState } from "../GameEngine";
 
 interface InteractiveWächterProps {
@@ -92,13 +93,13 @@ export function InteractiveWächter({
   return (
     <div className="max-w-5xl mx-auto">
       <motion.div
-        className="bg-center bg-cover bg-no-repeat h-[600px] w-[900px] rounded-[15px] mx-auto relative"
-        style={{ backgroundImage: `url('${imgComponent4}')` }}
+        className="w-[900px] mx-auto"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="h-[600px] overflow-clip relative w-[900px] flex flex-col items-center justify-center p-6">
+        <BackgroundBox backgroundImage={imgComponent4}>
+          <div className="h-[560px] overflow-clip relative w-full flex flex-col items-center justify-center">
           <motion.div
             className="font-['Jim_Nightshade:Regular',_sans-serif] text-center w-full"
             initial={{ opacity: 0, y: 20 }}
@@ -291,11 +292,8 @@ export function InteractiveWächter({
               Nachricht vervollständigen
             </Button>
           </motion.div>
-        </div>
-        <div
-          aria-hidden="true"
-          className="absolute border-[6px] border-solid border-white inset-0 pointer-events-none rounded-[15px] shadow-[0px_4px_8px_0px_#9db3ce]"
-        />
+          </div>
+        </BackgroundBox>
       </motion.div>
 
       {/* Magische Effekte */}

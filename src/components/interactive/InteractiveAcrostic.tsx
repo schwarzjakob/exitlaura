@@ -1,8 +1,9 @@
-import { Fragment, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { motion } from "motion/react";
 import { toast } from "sonner@2.0.3";
 import imgComponent4 from "figma:asset/4f048a806263f8bb83388f2709782db27449187b.png";
 import { Button } from "../ui/button";
+import { BackgroundBox } from "../ui/BackgroundBox";
 import { FlippableRatselCard } from '../FlippableRatselCard';
 import { AcrosticRatselContent } from '../RatselCardContents';
 import { PuzzleStageLayout } from '../PuzzleStageLayout';
@@ -82,31 +83,22 @@ export function InteractiveAcrostic({ onComplete }: InteractiveAcrosticProps) {
   return (
     <div className="max-w-7xl mx-auto">
       <PuzzleStageLayout card={cardElement}>
-        <motion.div
-          className="font-['Jim_Nightshade:Regular',_sans-serif] flex flex-col gap-8 items-center text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-        >
-          <div className="space-y-2 max-w-xl">
-            <h2 className="text-[32px] text-gray-900 font-bold">Tempel der Stille</h2>
-            <p className="text-[16px] text-gray-800 font-medium">
-              Drei Hallen, drei Kreise. Nur ein Podest trägt die Maske der Ruhe – folge den Hinweisen der Göttin.
-            </p>
-          </div>
+        <BackgroundBox backgroundImage={imgComponent4}>
+          <motion.div
+            className="font-['Jim_Nightshade:Regular',_sans-serif] flex flex-col gap-8 items-center text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+          >
+            <div className="space-y-2 max-w-xl">
+              <h2 className="text-[32px] text-gray-900 font-bold">Tempel der Stille</h2>
+              <p className="text-[16px] text-gray-800 font-medium">
+                Drei Hallen, drei Kreise. Nur ein Podest trägt die Maske der Ruhe – folge den Hinweisen der Göttin.
+              </p>
+            </div>
 
-          <div className="w-full flex flex-col lg:flex-row gap-8 items-start">
-            <div className="relative flex-1 w-full">
-              <div
-                className="absolute inset-0 opacity-20 rounded-3xl"
-                style={{
-                  backgroundImage: `url('${imgComponent4}')`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
-              />
-
-              <div className="relative rounded-3xl border border-white/70 bg-white/85 backdrop-blur p-6 shadow-lg">
+            <div className="w-full flex flex-col lg:flex-row gap-8 items-start">
+              <div className="flex-1 w-full">
                 <div className="grid grid-cols-4 gap-3 min-w-0">
                   {/* Header row */}
                   <div className="h-14 flex items-center justify-center">
@@ -178,9 +170,8 @@ export function InteractiveAcrostic({ onComplete }: InteractiveAcrosticProps) {
                 ))}
               </ul>
             </div>
-          </div>
 
-          <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-col items-center gap-3">
             {!solved && (
               <div className="flex flex-wrap justify-center gap-3">
                 <Button
@@ -211,8 +202,9 @@ export function InteractiveAcrostic({ onComplete }: InteractiveAcrosticProps) {
                 </p>
               </motion.div>
             )}
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
+        </BackgroundBox>
       </PuzzleStageLayout>
     </div>
   );

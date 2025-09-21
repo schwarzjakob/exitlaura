@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { toast } from 'sonner@2.0.3';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
+import { BackgroundBox } from '../ui/BackgroundBox';
 import { FlippableRatselCard } from '../FlippableRatselCard';
 import { SudokuRatselContent } from '../RatselCardContents';
 import { PuzzleStageLayout } from '../PuzzleStageLayout';
@@ -125,81 +126,75 @@ export function InteractiveSudoku({ gameState, onComplete }: InteractiveSudokuPr
 
   const renderNameGate = () => (
     <PuzzleStageLayout card={cardElement}>
-      <motion.div
-        className="font-['Jim_Nightshade:Regular',_sans-serif] text-center flex flex-col items-center justify-center gap-6 h-full"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.25 }}
-      >
-        <div className="bg-white/95 border-2 border-pink-200 rounded-2xl p-6 shadow-xl mb-4">
-          <h2 className="text-[32px] text-gray-900 font-bold mb-3">Das erste Rätsel</h2>
-          <p className="text-[16px] text-gray-800 max-w-md leading-relaxed font-medium">
-            Verwandle deinen Namen in Zahlen. Nur wenn die Summe 56 ergibt, öffnet sich das Buch der Göttin.
-          </p>
-        </div>
+      <BackgroundBox backgroundImage={imgComponent4}>
+        <motion.div
+          className="font-['Jim_Nightshade:Regular',_sans-serif] text-center flex flex-col items-center justify-center gap-6 h-full"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+        >
+          <div className="bg-white/95 border-2 border-pink-200 rounded-2xl p-6 shadow-xl mb-4">
+            <h2 className="text-[32px] text-gray-900 font-bold mb-3">Das erste Rätsel</h2>
+            <p className="text-[16px] text-gray-800 max-w-md leading-relaxed font-medium">
+              Verwandle deinen Namen in Zahlen. Nur wenn die Summe 56 ergibt, öffnet sich das Buch der Göttin.
+            </p>
+          </div>
 
-        <div className="flex flex-col gap-4 w-full max-w-xs">
-          <Input
-            value={nameInput}
-            onChange={(e) => setNameInput(e.target.value.toUpperCase())}
-            placeholder="DEIN NAME"
-            className="text-center text-xl font-bold uppercase tracking-[0.2em] bg-white border-2 border-pink-300 focus:border-pink-500 shadow-lg h-14 text-gray-800"
-            maxLength={5}
-          />
+          <div className="flex flex-col gap-4 w-full max-w-xs">
+            <Input
+              value={nameInput}
+              onChange={(e) => setNameInput(e.target.value.toUpperCase())}
+              placeholder="DEIN NAME"
+              className="text-center text-xl font-bold uppercase tracking-[0.2em] bg-white border-2 border-pink-300 focus:border-pink-500 shadow-lg h-14 text-gray-800"
+              maxLength={5}
+            />
 
-          {calculatedPage && (
-            <motion.div
-              className="bg-pink-100 border-2 border-pink-300 rounded-lg p-3"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+            {calculatedPage && (
+              <motion.div
+                className="bg-pink-100 border-2 border-pink-300 rounded-lg p-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                <p className="text-pink-800 font-bold text-sm">
+                  {nameInput} = {nameInput.split('').map(char => `${char}(${char.charCodeAt(0) - 64})`).join(' + ')} = Seite {calculatedPage}
+                </p>
+              </motion.div>
+            )}
+
+            <Button
+              onClick={handleNameSubmit}
+              disabled={nameInput.length !== 5}
+              className="h-14 rounded-xl bg-pink-600 hover:bg-pink-700 text-white text-lg font-bold shadow-xl border-2 border-pink-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <p className="text-pink-800 font-bold text-sm">
-                {nameInput} = {nameInput.split('').map(char => `${char}(${char.charCodeAt(0) - 64})`).join(' + ')} = Seite {calculatedPage}
-              </p>
-            </motion.div>
-          )}
+              Seite berechnen
+            </Button>
+          </div>
 
-          <Button
-            onClick={handleNameSubmit}
-            disabled={nameInput.length !== 5}
-            className="h-14 rounded-xl bg-pink-600 hover:bg-pink-700 text-white text-lg font-bold shadow-xl border-2 border-pink-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Seite berechnen
-          </Button>
-        </div>
-
-        <div className="bg-pink-50 border-2 border-pink-200 rounded-lg p-4 max-w-sm">
-          <p className="text-sm text-gray-700 font-medium leading-relaxed">
-            A=1, B=2 ... Z=26. Die richtige Summe weist dir den Weg.
-          </p>
-        </div>
-      </motion.div>
+          <div className="bg-pink-50 border-2 border-pink-200 rounded-lg p-4 max-w-sm">
+            <p className="text-sm text-gray-700 font-medium leading-relaxed">
+              A=1, B=2 ... Z=26. Die richtige Summe weist dir den Weg.
+            </p>
+          </div>
+        </motion.div>
+      </BackgroundBox>
     </PuzzleStageLayout>
   );
 
   const renderSudokuBoard = () => (
     <PuzzleStageLayout card={cardElement}>
-      <motion.div
-        className="font-['Jim_Nightshade:Regular',_sans-serif] text-center flex flex-col items-center gap-6"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.25 }}
-      >
-        <div className="bg-white/95 border-2 border-pink-200 rounded-2xl p-6 shadow-xl">
-          <h2 className="text-[32px] text-gray-900 font-bold mb-3">Sudoku - Seite {calculatedPage}</h2>
-          <p className="text-[16px] text-gray-800 font-medium">Fülle die mittlere Säule und finde die Zeichen für A, B und C.</p>
-        </div>
+      <BackgroundBox backgroundImage={imgComponent4}>
+        <motion.div
+          className="font-['Jim_Nightshade:Regular',_sans-serif] text-center flex flex-col items-center gap-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+        >
+          <div className="bg-white/95 border-2 border-pink-200 rounded-2xl p-6 shadow-xl">
+            <h2 className="text-[32px] text-gray-900 font-bold mb-3">Sudoku - Seite {calculatedPage}</h2>
+            <p className="text-[16px] text-gray-800 font-medium">Fülle die mittlere Säule und finde die Zeichen für A, B und C.</p>
+          </div>
 
-        <div className="relative w-full max-w-lg">
-          <div
-            className="absolute inset-0 opacity-30"
-            style={{
-              backgroundImage: `url('${imgComponent4}')`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center'
-            }}
-          />
-          <div className="relative rounded-3xl border-2 border-pink-300 bg-white/95 backdrop-blur p-6 shadow-xl">
+          <div className="w-full max-w-lg">
             <div className="grid grid-cols-9 gap-[2px] bg-pink-200 p-4 rounded-2xl border-2 border-pink-300">
               {sudokuPuzzle.flat().map((value, index) => {
                 const row = Math.floor(index / 9);
@@ -247,25 +242,25 @@ export function InteractiveSudoku({ gameState, onComplete }: InteractiveSudokuPr
               })}
             </div>
           </div>
-        </div>
 
-        <div className="w-full max-w-lg bg-white/95 border-2 border-pink-200 rounded-2xl px-6 py-4 shadow-xl">
-          <p className="text-[16px] text-gray-800 font-bold mb-4">Gefundener Code:</p>
-          <div className="flex justify-center gap-8 text-3xl font-bold text-pink-700">
-            <span className="bg-pink-100 border-2 border-pink-300 rounded-lg px-4 py-2">A = {markedFields.A ?? '?'}</span>
-            <span className="bg-pink-100 border-2 border-pink-300 rounded-lg px-4 py-2">B = {markedFields.B ?? '?'}</span>
-            <span className="bg-pink-100 border-2 border-pink-300 rounded-lg px-4 py-2">C = {markedFields.C ?? '?'}</span>
+          <div className="w-full max-w-lg bg-white/95 border-2 border-pink-200 rounded-2xl px-6 py-4 shadow-xl">
+            <p className="text-[16px] text-gray-800 font-bold mb-4">Gefundener Code:</p>
+            <div className="flex justify-center gap-8 text-3xl font-bold text-pink-700">
+              <span className="bg-pink-100 border-2 border-pink-300 rounded-lg px-4 py-2">A = {markedFields.A ?? '?'}</span>
+              <span className="bg-pink-100 border-2 border-pink-300 rounded-lg px-4 py-2">B = {markedFields.B ?? '?'}</span>
+              <span className="bg-pink-100 border-2 border-pink-300 rounded-lg px-4 py-2">C = {markedFields.C ?? '?'}</span>
+            </div>
           </div>
-        </div>
 
-        <Button
-          onClick={checkSudokuCompletion}
-          disabled={Object.values(markedFields).some(v => v === null)}
-          className="mt-4 h-14 rounded-xl bg-pink-600 hover:bg-pink-700 px-12 text-lg font-bold shadow-xl border-2 border-pink-700 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Code prüfen
-        </Button>
-      </motion.div>
+          <Button
+            onClick={checkSudokuCompletion}
+            disabled={Object.values(markedFields).some(v => v === null)}
+            className="mt-4 h-14 rounded-xl bg-pink-600 hover:bg-pink-700 px-12 text-lg font-bold shadow-xl border-2 border-pink-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Code prüfen
+          </Button>
+        </motion.div>
+      </BackgroundBox>
     </PuzzleStageLayout>
   );
 

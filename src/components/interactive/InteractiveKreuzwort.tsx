@@ -1,9 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "motion/react";
 import { toast } from "sonner@2.0.3";
 import imgComponent4 from "figma:asset/4f048a806263f8bb83388f2709782db27449187b.png";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { BackgroundBox } from "../ui/BackgroundBox";
 import { FlippableRatselCard } from '../FlippableRatselCard';
 import { KreuzwortRatselContent } from '../RatselCardContents';
 import { PuzzleStageLayout } from '../PuzzleStageLayout';
@@ -89,30 +90,22 @@ export function InteractiveKreuzwort({ onComplete }: InteractiveKreuzwortProps) 
   return (
     <div className="max-w-7xl mx-auto">
       <PuzzleStageLayout card={cardElement}>
-        <motion.div
-          className="font-['Jim_Nightshade:Regular',_sans-serif] flex flex-col gap-8 items-center text-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-        >
-          <div className="space-y-2">
-            <h2 className="text-[32px] text-gray-900 font-bold">Kästchen des Wissens</h2>
-            <p className="text-[16px] text-gray-800 max-w-2xl font-medium">
-              Trage die Zelda-Begriffe ein. Sobald sie korrekt stehen, offenbart das goldene Feld das Wort der Macht.
-            </p>
-          </div>
+        <BackgroundBox backgroundImage={imgComponent4}>
+          <motion.div
+            className="font-['Jim_Nightshade:Regular',_sans-serif] flex flex-col gap-8 items-center text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+          >
+            <div className="space-y-2">
+              <h2 className="text-[32px] text-gray-900 font-bold">Kästchen des Wissens</h2>
+              <p className="text-[16px] text-gray-800 max-w-2xl font-medium">
+                Trage die Zelda-Begriffe ein. Sobald sie korrekt stehen, offenbart das goldene Feld das Wort der Macht.
+              </p>
+            </div>
 
-          <div className="w-full flex flex-col lg:flex-row gap-8 items-start">
-            <div className="relative flex-1 w-full">
-              <div
-                className="absolute inset-0 opacity-25 rounded-3xl"
-                style={{
-                  backgroundImage: `url('${imgComponent4}')`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
-              />
-              <div className="relative rounded-3xl border border-white/70 bg-white/80 backdrop-blur p-6 shadow-lg">
+            <div className="w-full flex flex-col lg:flex-row gap-8 items-start">
+              <div className="flex-1 w-full">
                 <div className="grid grid-cols-8 gap-[2px] bg-pink-100/80 p-3 rounded-2xl">
                   {Array.from({ length: GRID_ROWS * GRID_COLS }, (_, i) => {
                     const row = Math.floor(i / GRID_COLS);
@@ -224,9 +217,8 @@ export function InteractiveKreuzwort({ onComplete }: InteractiveKreuzwortProps) 
                 )}
               </div>
             </div>
-          </div>
 
-          {showFinalWord && (
+            {showFinalWord && (
             <motion.div
               className="w-full max-w-md bg-white/85 border border-pink-200 rounded-3xl px-6 py-4 shadow-lg"
               initial={{ opacity: 0, y: 10 }}
@@ -239,14 +231,15 @@ export function InteractiveKreuzwort({ onComplete }: InteractiveKreuzwortProps) 
             </motion.div>
           )}
 
-          <Button
-            onClick={checkAnswers}
-            disabled={!allFieldsFilled || showFinalWord}
-            className="h-12 rounded-full bg-pink-600 hover:bg-pink-500 px-10 text-base font-semibold shadow-md shadow-pink-500/30 disabled:opacity-60"
-          >
-            Triforce enthüllen
-          </Button>
-        </motion.div>
+            <Button
+              onClick={checkAnswers}
+              disabled={!allFieldsFilled || showFinalWord}
+              className="h-12 rounded-full bg-pink-600 hover:bg-pink-500 px-10 text-base font-semibold shadow-md shadow-pink-500/30 disabled:opacity-60"
+            >
+              Triforce enthüllen
+            </Button>
+          </motion.div>
+        </BackgroundBox>
       </PuzzleStageLayout>
     </div>
   );
