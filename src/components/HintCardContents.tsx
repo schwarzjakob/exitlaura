@@ -85,15 +85,7 @@ export const RomanceHintContent = () => (
     <div className="text-center mb-4 p-3 bg-yellow-100 border-2 border-yellow-400 rounded-lg">
       <h4 className="text-[16px] font-bold text-yellow-800 mb-2">💡 Hinweis</h4>
       <p className="text-[13px] text-yellow-700">
-        Verbinde die Herzen in der richtigen Reihenfolge
-      </p>
-    </div>
-    
-    <div className="text-center mb-4 p-3 bg-blue-100 border-2 border-blue-400 rounded-lg">
-      <h4 className="text-[16px] font-bold text-blue-800 mb-2">🎯 Tipp</h4>
-      <p className="text-[13px] text-blue-700">
-        Beginne beim ersten Herz und ende beim letzten. 
-        Die Reihenfolge ist wichtig - sie zeigt dir das Rechte.
+        Es gibt doch so viele tolle Bücher, aber welche sind die besten? Sachbücher sicher nicht!
       </p>
     </div>
   </>

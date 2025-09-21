@@ -70,7 +70,7 @@ export function HintCard({ puzzleId, title, hintContent, className = "" }: HintC
                 <p style={{ color: 'white', textShadow: `-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black` }}>Hinweis-Karte</p>
               </div>
               <div className="relative shrink-0 text-[120px] leading-none w-full">
-                <p>{puzzleId}</p>
+                <p style={{ color: 'white', textShadow: `-1px -1px 0 black,1px -1px 0 black,-1px 1px 0 black,1px 1px 0 black` }}>{puzzleId}</p>
               </div>
               <div className="relative shrink-0 text-[16px] w-full">
                 <p className="leading-tight italic text-gray-700" style={{ textShadow: `-1px -1px 0 white,1px -1px 0 white,-1px 1px 0 white,1px 1px 0 white` }}>
