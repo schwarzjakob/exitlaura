@@ -1,8 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "motion/react";
 import { toast } from "sonner@2.0.3";
 import imgComponent4 from "figma:asset/4f048a806263f8bb83388f2709782db27449187b.png";
 import { Button } from "../ui/button";
+import { BackgroundBox } from "../ui/BackgroundBox";
 import { FlippableRatselCard } from '../FlippableRatselCard';
 import { FinaleRatselContent } from '../RatselCardContents';
 import { HintCard } from '../HintCard';
@@ -89,18 +90,11 @@ export function InteractiveFinalePuzzle({ onComplete }: InteractiveFinalePuzzleP
               Ordne die Fragmente deiner Reise. Nur in der richtigen Reihenfolge entsteht der finale Kristall.
             </p>
           </div>
-
+          <BackgroundBox backgroundImage={imgComponent4}>
           <div className="w-full flex flex-col lg:flex-row gap-8 items-start">
             <div className="relative flex-1 w-full">
-              <div
-                className="absolute inset-0 opacity-25 rounded-3xl"
-                style={{
-                  backgroundImage: `url('${imgComponent4}')`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
-              />
-              <div className="relative rounded-3xl border-2 border-pink-200 bg-white/90 backdrop-blur p-6 shadow-xl">
+              
+                <div className="rounded-3xl border-2 border-pink-200 bg-white/90 backdrop-blur p-6 shadow-xl">
                 <p className="text-sm text-gray-700 mb-4 font-medium">
                   Klicke auf die Fragmente, um ihre Reihenfolge festzulegen.
                 </p>
@@ -131,7 +125,7 @@ export function InteractiveFinalePuzzle({ onComplete }: InteractiveFinalePuzzleP
                     );
                   })}
                 </div>
-              </div>
+                </div>
             </div>
 
             <div className="w-full max-w-sm bg-white/85 border border-pink-100 rounded-3xl p-6 shadow-lg text-left">
@@ -179,17 +173,20 @@ export function InteractiveFinalePuzzle({ onComplete }: InteractiveFinalePuzzleP
           </div>
 
           {showSolution && (
-            <motion.div
-              className="w-full max-w-md bg-white/90 border border-emerald-300 rounded-3xl px-6 py-5 shadow-xl"
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
-            >
-              <p className="text-2xl mb-2">💎</p>
-              <p className="text-[15px] text-emerald-700 font-semibold">
-                Der Kristall der Macht erscheint! Du hast alle Fragmente vereint – die letzte Prüfung ist bestanden.
-              </p>
-            </motion.div>
+            
+              <motion.div
+                className="w-full max-w-md bg-white/90 border border-emerald-300 rounded-3xl px-6 py-5 shadow-xl"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+              >
+                <p className="text-2xl mb-2">💎</p>
+                <p className="text-[15px] text-emerald-700 font-semibold">
+                  Der Kristall der Macht erscheint! Du hast alle Fragmente vereint – die letzte Prüfung ist bestanden.
+                </p>
+              </motion.div>
+            
           )}
+          </BackgroundBox>
         </motion.div>
       </PuzzleStageLayout>
     </div>

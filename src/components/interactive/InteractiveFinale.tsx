@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'sonner@2.0.3';
 import imgComponent4 from "figma:asset/4f048a806263f8bb83388f2709782db27449187b.png";
 import { Button } from '../ui/button';
+import { BackgroundBox } from '../ui/BackgroundBox';
 import { Gift, Star, Heart, Trophy, Crown } from 'lucide-react';
 import type { GameState } from '../GameEngine';
 
@@ -89,16 +90,15 @@ export function InteractiveFinale({ gameState, onComplete }: InteractiveFinalePr
         {currentPhase === 'story' && (
           <motion.div 
             key="story"
-            className="bg-center bg-cover bg-no-repeat h-[600px] w-[700px] rounded-[15px] mx-auto relative" 
-            style={{ backgroundImage: `url('${imgComponent4}')` }}
+            className="h-[600px] w-[700px] mx-auto"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="h-[600px] overflow-auto relative w-[700px] p-8">
-              <motion.div 
-                className="[text-shadow:rgba(0,0,0,0.25)_0px_4px_4px] font-['Jim_Nightshade:Regular',_sans-serif] leading-[24px] text-[16px] text-black"
+            <BackgroundBox backgroundImage={imgComponent4}>
+              <motion.div
+                className="h-[600px] overflow-auto p-8 [text-shadow:rgba(0,0,0,0.25)_0px_4px_4px] font-['Jim_Nightshade:Regular',_sans-serif] leading-[24px] text-[16px] text-black"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
@@ -155,24 +155,22 @@ export function InteractiveFinale({ gameState, onComplete }: InteractiveFinalePr
                   </motion.div>
                 )}
               </motion.div>
-            </div>
-            <div aria-hidden="true" className="absolute border-[6px] border-solid border-white inset-0 pointer-events-none rounded-[15px] shadow-[0px_4px_8px_0px_#9db3ce]" />
+            </BackgroundBox>
           </motion.div>
         )}
 
         {currentPhase === 'gifts' && (
           <motion.div 
             key="gifts"
-            className="bg-center bg-cover bg-no-repeat h-[700px] w-[900px] rounded-[15px] mx-auto relative" 
-            style={{ backgroundImage: `url('${imgComponent4}')` }}
+            className="h-[700px] w-[900px] mx-auto"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="h-[700px] overflow-clip relative w-[900px] flex flex-col items-center justify-center p-6">
-              <motion.div 
-                className="font-['Jim_Nightshade:Regular',_sans-serif] text-center w-full"
+            <BackgroundBox backgroundImage={imgComponent4}>
+              <motion.div
+                className="h-[700px] overflow-clip flex flex-col items-center justify-center p-6 font-['Jim_Nightshade:Regular',_sans-serif] text-center w-full"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
@@ -290,20 +288,21 @@ export function InteractiveFinale({ gameState, onComplete }: InteractiveFinalePr
                   )}
                 </div>
               </motion.div>
-            </div>
-            <div aria-hidden="true" className="absolute border-[6px] border-solid border-white inset-0 pointer-events-none rounded-[15px] shadow-[0px_4px_8px_0px_#9db3ce]" />
+            </BackgroundBox>
           </motion.div>
         )}
 
         {currentPhase === 'celebration' && (
           <motion.div 
             key="celebration"
-            className="text-center p-8 max-w-2xl mx-auto"
+            className="max-w-2xl mx-auto"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
             transition={{ type: "spring", duration: 1 }}
           >
+            <BackgroundBox backgroundImage={imgComponent4}>
+              <div className="text-center p-8">
             <motion.div
               className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 rounded-3xl p-8 text-white shadow-2xl"
               animate={{ 
@@ -364,6 +363,8 @@ export function InteractiveFinale({ gameState, onComplete }: InteractiveFinalePr
                 </motion.div>
               )}
             </motion.div>
+              </div>
+            </BackgroundBox>
           </motion.div>
         )}
       </AnimatePresence>

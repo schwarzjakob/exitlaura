@@ -1,8 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion } from "motion/react";
 import { toast } from "sonner@2.0.3";
 import imgComponent4 from "figma:asset/4f048a806263f8bb83388f2709782db27449187b.png";
 import { Button } from "../ui/button";
+import { BackgroundBox } from "../ui/BackgroundBox";
 import { FlippableRatselCard } from '../FlippableRatselCard';
 import { HintCard } from '../HintCard';
 import { ElchHintContent } from '../HintCardContents';
@@ -94,6 +95,7 @@ export function InteractiveElch({ onComplete }: InteractiveElchProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
         >
+          <BackgroundBox backgroundImage={imgComponent4}>
           <div className="space-y-2 max-w-xl">
             <h2 className="text-[32px] text-gray-900 font-bold">Das Geweih des Nordens</h2>
             <p className="text-[14px] text-black/70">
@@ -102,16 +104,9 @@ export function InteractiveElch({ onComplete }: InteractiveElchProps) {
           </div>
 
           <div className="relative w-full max-w-xl">
-            <div
-              className="absolute inset-0 opacity-25 rounded-3xl"
-              style={{
-                backgroundImage: `url('${imgComponent4}')`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-              }}
-            />
-            <div className="relative bg-white/90 border-2 border-pink-200 backdrop-blur rounded-3xl p-6 shadow-xl">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+            
+              <div className="bg-white/90 border-2 border-pink-200 backdrop-blur rounded-3xl p-6 shadow-xl">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                 {animals.map((animal) => {
                   const isSelected = selectedAnimal === animal.id;
                   const isCorrect = animal.id === correctAnswer;
@@ -147,34 +142,40 @@ export function InteractiveElch({ onComplete }: InteractiveElchProps) {
                     </motion.button>
                   );
                 })}
+                </div>
               </div>
-            </div>
+            
           </div>
 
           {showResult && selectedAnimal === correctAnswer && (
-            <motion.div
-              className="bg-emerald-100 border border-emerald-400 rounded-3xl px-6 py-4 max-w-sm shadow-lg"
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
-            >
-              <p className="text-2xl mb-2">🦌</p>
-              <p className="text-[15px] text-emerald-700 font-semibold">
-                Du hast den Elch gefunden! Der stille Gefährte begleitet dich nun durch Schwedens Wälder.
-              </p>
-            </motion.div>
+            
+              <motion.div
+                className="bg-emerald-100 border border-emerald-400 rounded-3xl px-6 py-4 max-w-sm shadow-lg"
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+              >
+                <p className="text-2xl mb-2">🦌</p>
+                <p className="text-[15px] text-emerald-700 font-semibold">
+                  Du hast den Elch gefunden! Der stille Gefährte begleitet dich nun durch Schwedens Wälder.
+                </p>
+              </motion.div>
+            
           )}
 
           {showResult && selectedAnimal !== correctAnswer && (
-            <Button
-              onClick={() => {
-                setShowResult(false);
-                setSelectedAnimal(null);
-              }}
-              className="h-11 rounded-full bg-pink-600 hover:bg-pink-500 px-8 text-sm font-semibold text-white shadow-md shadow-pink-500/30"
-            >
-              Nochmal versuchen
-            </Button>
+            
+              <Button
+                onClick={() => {
+                  setShowResult(false);
+                  setSelectedAnimal(null);
+                }}
+                className="h-11 rounded-full bg-pink-600 hover:bg-pink-500 px-8 text-sm font-semibold text-white shadow-md shadow-pink-500/30"
+              >
+                Nochmal versuchen
+              </Button>
+            
           )}
+          </BackgroundBox>
         </motion.div>
       </PuzzleStageLayout>
     </div>
