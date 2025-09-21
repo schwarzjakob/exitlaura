@@ -195,7 +195,7 @@ export function InteractiveSudoku({ gameState, onComplete }: InteractiveSudokuPr
           </div>
 
           <div className="w-full max-w-lg">
-            <div className="grid grid-cols-9 gap-[2px] bg-pink-200 p-4 rounded-2xl border-2 border-pink-300">
+            <div className="grid grid-cols-9 gap-0 bg-pink-200 p-4 rounded-2xl border-2 border-pink-300">
               {sudokuPuzzle.flat().map((value, index) => {
                 const row = Math.floor(index / 9);
                 const col = index % 9;
@@ -204,16 +204,32 @@ export function InteractiveSudoku({ gameState, onComplete }: InteractiveSudokuPr
                 const isMarked = Object.values(markedPositions).some(pos => pos.row === row && pos.col === col);
                 const markerLetter = Object.entries(markedPositions).find(([_, pos]) => pos.row === row && pos.col === col)?.[0];
                 const isPrefilled = value !== 0;
+                
+                // Determine if this cell is on a 3x3 box boundary
+                const isBoxBoundaryRight = col === 2 || col === 5; // Right edge of 3x3 boxes
+                const isBoxBoundaryBottom = row === 2 || row === 5; // Bottom edge of 3x3 boxes
+                const isBoxBoundaryLeft = col === 3 || col === 6; // Left edge of 3x3 boxes
+                const isBoxBoundaryTop = row === 3 || row === 6; // Top edge of 3x3 boxes
+
+                // Build border styles using inline styles for reliability
+                const borderStyle: React.CSSProperties = {
+                  border: '1px solid #f9a8d4', // pink-300
+                  borderRight: isBoxBoundaryRight ? '4px solid #be185d' : '1px solid #f9a8d4', // pink-600 for thick borders
+                  borderBottom: isBoxBoundaryBottom ? '4px solid #be185d' : '1px solid #f9a8d4',
+                  borderLeft: isBoxBoundaryLeft ? '4px solid #be185d' : '1px solid #f9a8d4',
+                  borderTop: isBoxBoundaryTop ? '4px solid #be185d' : '1px solid #f9a8d4',
+                };
 
                 return (
                   <div
                     key={index}
                     className={`
-                      w-10 h-10 border-2 flex items-center justify-center text-[14px] relative rounded-md shadow-sm
-                      ${isMiddleColumn ? 'bg-pink-100 border-pink-400' : 'bg-white border-pink-300'}
-                      ${isMarked ? 'bg-pink-300 border-pink-600 text-pink-800 font-bold shadow-md' : ''}
-                      ${isPrefilled ? 'font-bold text-pink-800 bg-pink-100 border-pink-400' : ''}
+                      w-10 h-10 flex items-center justify-center text-[14px] relative rounded-md shadow-sm
+                      ${isMiddleColumn ? 'bg-pink-100' : 'bg-white'}
+                      ${isMarked ? 'bg-pink-300 text-pink-800 font-bold shadow-md' : ''}
+                      ${isPrefilled ? 'font-bold text-pink-800 bg-pink-100' : ''}
                     `}
+                    style={borderStyle}
                   >
                     {isPrefilled ? (
                       <span className="text-gray-800 font-bold">{value}</span>

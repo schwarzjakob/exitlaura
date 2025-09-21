@@ -1,3 +1,4 @@
+import React from 'react';
 import imgComponent4 from "figma:asset/4f048a806263f8bb83388f2709782db27449187b.png";
 import imgBackground from "figma:asset/dcefe1de85a1f7e1e77f6f4f86686fc1468ca321.png";
 
@@ -51,7 +52,7 @@ export function SudokuCard() {
             
             {/* Sudoku Grid */}
             <div className="bg-white/90 p-3 rounded-lg shadow-inner">
-              <div className="grid grid-cols-9 gap-[1px] bg-black p-2">
+              <div className="grid grid-cols-9 gap-0 bg-black p-2">
                 {Array.from({ length: 81 }, (_, i) => {
                   const row = Math.floor(i / 9);
                   const col = i % 9;
@@ -63,14 +64,30 @@ export function SudokuCard() {
                     : 'C' 
                     : '';
                   
+                  // Determine if this cell is on a 3x3 box boundary
+                  const isBoxBoundaryRight = col === 2 || col === 5; // Right edge of 3x3 boxes
+                  const isBoxBoundaryBottom = row === 2 || row === 5; // Bottom edge of 3x3 boxes
+                  const isBoxBoundaryLeft = col === 3 || col === 6; // Left edge of 3x3 boxes
+                  const isBoxBoundaryTop = row === 3 || row === 6; // Top edge of 3x3 boxes
+                  
+                  // Build border styles using inline styles for reliability
+                  const borderStyle: React.CSSProperties = {
+                    border: '1px solid #d1d5db', // gray-300
+                    borderRight: isBoxBoundaryRight ? '2px solid #4b5563' : '1px solid #d1d5db', // gray-600 for thick borders
+                    borderBottom: isBoxBoundaryBottom ? '2px solid #4b5563' : '1px solid #d1d5db',
+                    borderLeft: isBoxBoundaryLeft ? '2px solid #4b5563' : '1px solid #d1d5db',
+                    borderTop: isBoxBoundaryTop ? '2px solid #4b5563' : '1px solid #d1d5db',
+                  };
+                  
                   return (
                     <div
                       key={i}
                       className={`
-                        w-6 h-6 bg-white border border-gray-300 flex items-center justify-center text-xs
+                        w-6 h-6 bg-white flex items-center justify-center text-xs
                         ${isMiddleColumn ? 'bg-blue-50' : ''}
                         ${isMarkedField ? 'bg-yellow-200 border-2 border-yellow-600' : ''}
                       `}
+                      style={borderStyle}
                     >
                       {isMarkedField && (
                         <span className="text-red-600 font-bold text-[10px]">{markerLetter}</span>
