@@ -5,6 +5,8 @@ import imgComponent4 from "figma:asset/4f048a806263f8bb83388f2709782db27449187b.
 import { Button } from "../ui/button";
 import { FlippableRatselCard } from '../FlippableRatselCard';
 import { FinaleRatselContent } from '../RatselCardContents';
+import { HintCard } from '../HintCard';
+import { FinaleHintContent } from '../HintCardContents';
 import { PuzzleStageLayout } from '../PuzzleStageLayout';
 import type { GameState } from "../GameEngine";
 
@@ -58,11 +60,18 @@ export function InteractiveFinalePuzzle({ onComplete }: InteractiveFinalePuzzleP
     fragments.find(f => f.order === order);
 
   const cardElement = (
-    <FlippableRatselCard
-      puzzleId="E"
-      title="Kristall der Macht"
-      content={<FinaleRatselContent />}
-    />
+    <div className="flex flex-col lg:flex-row gap-4">
+      <FlippableRatselCard
+        puzzleId="E"
+        title="Kristall der Macht"
+        content={<FinaleRatselContent />}
+      />
+      <HintCard
+        puzzleId="E"
+        title="Kristall der Macht"
+        hintContent={<FinaleHintContent />}
+      />
+    </div>
   );
 
   return (

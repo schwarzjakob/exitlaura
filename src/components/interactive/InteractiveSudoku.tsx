@@ -6,6 +6,8 @@ import { Input } from '../ui/input';
 import { BackgroundBox } from '../ui/BackgroundBox';
 import { FlippableRatselCard } from '../FlippableRatselCard';
 import { SudokuRatselContent } from '../RatselCardContents';
+import { HintCard } from '../HintCard';
+import { SudokuHintContent } from '../HintCardContents';
 import { PuzzleStageLayout } from '../PuzzleStageLayout';
 import imgComponent4 from "figma:asset/4f048a806263f8bb83388f2709782db27449187b.png";
 import type { GameState } from '../GameEngine';
@@ -117,11 +119,18 @@ export function InteractiveSudoku({ gameState, onComplete }: InteractiveSudokuPr
   };
 
   const cardElement = (
-    <FlippableRatselCard
-      puzzleId="A"
-      title="Rätsel der Namen"
-      content={<SudokuRatselContent />}
-    />
+    <div className="flex flex-col lg:flex-row gap-4">
+      <FlippableRatselCard
+        puzzleId="A"
+        title="Rätsel der Namen"
+        content={<SudokuRatselContent />}
+      />
+      <HintCard
+        puzzleId="A"
+        title="Rätsel der Namen"
+        hintContent={<SudokuHintContent />}
+      />
+    </div>
   );
 
   const renderNameGate = () => (

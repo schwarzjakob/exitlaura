@@ -4,6 +4,8 @@ import { toast } from "sonner@2.0.3";
 import imgComponent4 from "figma:asset/4f048a806263f8bb83388f2709782db27449187b.png";
 import { Button } from "../ui/button";
 import { FlippableRatselCard } from '../FlippableRatselCard';
+import { HintCard } from '../HintCard';
+import { ElchHintContent } from '../HintCardContents';
 import type { GameState } from "../GameEngine";
 import { PuzzleStageLayout } from '../PuzzleStageLayout';
 
@@ -69,11 +71,18 @@ export function InteractiveElch({ onComplete }: InteractiveElchProps) {
   };
 
   const cardElement = (
-    <FlippableRatselCard
-      puzzleId="F"
-      title="Das Geweih des Nordens"
-      content={<ElchRatselContent />}
-    />
+    <div className="flex flex-col lg:flex-row gap-4">
+      <FlippableRatselCard
+        puzzleId="F"
+        title="Das Geweih des Nordens"
+        content={<ElchRatselContent />}
+      />
+      <HintCard
+        puzzleId="F"
+        title="Das Geweih des Nordens"
+        hintContent={<ElchHintContent />}
+      />
+    </div>
   );
 
   return (

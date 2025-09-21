@@ -6,6 +6,8 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { FlippableRatselCard } from '../FlippableRatselCard';
 import { RomanceRatselContent } from '../RatselCardContents';
+import { HintCard } from '../HintCard';
+import { RomanceHintContent } from '../HintCardContents';
 import { PuzzleStageLayout } from '../PuzzleStageLayout';
 import type { GameState } from "../GameEngine";
 
@@ -71,11 +73,18 @@ export function InteractiveRomance({ onComplete }: InteractiveRomanceProps) {
   };
 
   const cardElement = (
-    <FlippableRatselCard
-      puzzleId="D"
-      title="Pfad des Herzens"
-      content={<RomanceRatselContent />}
-    />
+    <div className="flex flex-col lg:flex-row gap-4">
+      <FlippableRatselCard
+        puzzleId="D"
+        title="Pfad des Herzens"
+        content={<RomanceRatselContent />}
+      />
+      <HintCard
+        puzzleId="D"
+        title="Pfad des Herzens"
+        hintContent={<RomanceHintContent />}
+      />
+    </div>
   );
 
   return (

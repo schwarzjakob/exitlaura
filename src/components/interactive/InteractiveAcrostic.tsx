@@ -6,6 +6,8 @@ import { Button } from "../ui/button";
 import { BackgroundBox } from "../ui/BackgroundBox";
 import { FlippableRatselCard } from '../FlippableRatselCard';
 import { AcrosticRatselContent } from '../RatselCardContents';
+import { HintCard } from '../HintCard';
+import { AcrosticHintContent } from '../HintCardContents';
 import { PuzzleStageLayout } from '../PuzzleStageLayout';
 import type { GameState } from "../GameEngine";
 
@@ -73,11 +75,18 @@ export function InteractiveAcrostic({ onComplete }: InteractiveAcrosticProps) {
   };
 
   const cardElement = (
-    <FlippableRatselCard
-      puzzleId="C"
-      title="Stille der Maske"
-      content={<AcrosticRatselContent />}
-    />
+    <div className="flex flex-col lg:flex-row gap-4">
+      <FlippableRatselCard
+        puzzleId="C"
+        title="Stille der Maske"
+        content={<AcrosticRatselContent />}
+      />
+      <HintCard
+        puzzleId="C"
+        title="Stille der Maske"
+        hintContent={<AcrosticHintContent />}
+      />
+    </div>
   );
 
   return (

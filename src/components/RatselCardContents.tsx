@@ -1,3 +1,5 @@
+import React from 'react';
+
 // Spezifische Inhalte für jede Rätselkarte
 
 export const SudokuRatselContent = () => (
@@ -22,9 +24,6 @@ export const SudokuRatselContent = () => (
       nur ihre Summe weist den Weg.
     </p>
     
-    <div className="text-center mt-4 p-2 bg-white/80 rounded text-[10px] text-gray-700">
-      <strong>Hinweis:</strong> A=1, B=2, C=3... Z=26
-    </div>
   </>
 );
 
@@ -50,9 +49,6 @@ export const KreuzwortRatselContent = () => (
       das ist der Schlüssel klug.
     </p>
     
-    <div className="text-center mt-4 p-2 bg-white/80 rounded text-[10px] text-gray-700">
-      <strong>Gesucht:</strong> 8 Buchstaben - Das Symbol der Macht
-    </div>
   </>
 );
 
@@ -72,9 +68,6 @@ export const AcrosticRatselContent = () => (
       Wer den inneren Kreis der Eishöhle findet, hört die Göttin flüstern.
     </p>
     
-    <div className="text-center mt-4 p-2 bg-white/80 rounded text-[10px] text-gray-700">
-      <strong>Hinweis:</strong> Finde das Podest der Maske – dort wartet der Weg zu Päckchen&nbsp;C.
-    </div>
   </>
 );
 
@@ -100,9 +93,6 @@ export const RomanceRatselContent = () => (
       wird dich nicht verletzen.
     </p>
     
-    <div className="text-center mt-4 p-2 bg-white/80 rounded text-[10px] text-gray-700">
-      <strong>Hinweis:</strong> Verbinde die Herzen in der richtigen Reihenfolge
-    </div>
   </>
 );
 
@@ -128,9 +118,6 @@ export const FinaleRatselContent = () => (
       lass das Wort erklingen.
     </p>
     
-    <div className="text-center mt-4 p-2 bg-white/80 rounded text-[10px] text-gray-700">
-      <strong>Finale:</strong> Der letzte Schlüssel zur großen Belohnung
-    </div>
   </>
 );
 
@@ -154,8 +141,5 @@ export const ElchRatselContent = () => (
       durch Schwedens Wälder weit.
     </p>
     
-    <div className="text-center mt-4 p-2 bg-white/80 rounded text-[10px] text-gray-700">
-      <strong>Epilog:</strong> Der letzte Weg zu einem treuen Freund
-    </div>
   </>
 );

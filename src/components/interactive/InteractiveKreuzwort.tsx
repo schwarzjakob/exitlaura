@@ -7,6 +7,8 @@ import { Input } from "../ui/input";
 import { BackgroundBox } from "../ui/BackgroundBox";
 import { FlippableRatselCard } from '../FlippableRatselCard';
 import { KreuzwortRatselContent } from '../RatselCardContents';
+import { HintCard } from '../HintCard';
+import { KreuzwortHintContent } from '../HintCardContents';
 import { PuzzleStageLayout } from '../PuzzleStageLayout';
 import type { GameState } from "../GameEngine";
 
@@ -80,11 +82,18 @@ export function InteractiveKreuzwort({ onComplete }: InteractiveKreuzwortProps) 
   };
 
   const cardElement = (
-    <FlippableRatselCard
-      puzzleId="B"
-      title="Netz der Symbole"
-      content={<KreuzwortRatselContent />}
-    />
+    <div className="flex flex-col lg:flex-row gap-4">
+      <FlippableRatselCard
+        puzzleId="B"
+        title="Netz der Symbole"
+        content={<KreuzwortRatselContent />}
+      />
+      <HintCard
+        puzzleId="B"
+        title="Netz der Symbole"
+        hintContent={<KreuzwortHintContent />}
+      />
+    </div>
   );
 
   return (
