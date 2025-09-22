@@ -45,7 +45,7 @@ const initialGameState: GameState = {
 
 const stageNames = {
   intro: 'Intro: Die Göttin spricht',
-  sudoku: 'Rätsel A: Sudoku der Zahlen', 
+  sudoku: 'Rätsel A: Die Zahlenarchive',
   wächter: 'Prüfung: Die drei Wächter',
   'permission-a': 'Erlaubnis: Päckchen A',
   'reveal-a': 'Geschenk A: Zelda-Hüllen',
@@ -65,6 +65,55 @@ const stageNames = {
   'permission-f': 'Erlaubnis: Päckchen F',
   'reveal-f': 'Geschenk F: Elch-Gefährte',
   completed: 'Spiel abgeschlossen'
+};
+
+const getStageDescription = (currentStage: GameStage, completedStages: GameStage[]) => {
+  const isCompleted = (stage: GameStage) => completedStages.includes(stage);
+
+  switch (currentStage) {
+    case 'sudoku':
+      return '🔢 Laura betritt die heiligen Archive der Göttin. Zwischen staubigen Regalen alter Bücher verbirgt sich ein Gitter aus Symbolen, das nur mit klarem Kopf gelöst werden kann. Jede Zahl ist ein Schlüssel, jede Zeile ein Pfad – dies ist ihre erste Prüfung auf dem Weg zur Weisheit.';
+
+    case 'wächter':
+      if (isCompleted('sudoku')) {
+        return '⚔️ Mit dem Code der Zahlen in der Hand nähert sich Laura der ersten Kammer. Doch vor dem Eingang erheben sich uralte Statuen, die plötzlich zum Leben erwachen. "Du hast Weisheit bewiesen", sprechen sie im Einklang, "doch besitzt du auch die Entschlossenheit eines wahren Wächters?"';
+      }
+      return '⚔️ Drei mächtige Wächter versperren Laura den Weg. Ihre steinernen Gesichter erwachen zum Leben, bereit, ihre Entschlossenheit zu prüfen.';
+
+    case 'kreuzwort':
+      if (isCompleted('wächter')) {
+        return '🔗 Die Wächter haben Laura als würdig befunden und ihr den Weg zur Kreuzung der Legenden gewiesen. Hier steht ein Monument voller leerer Felder – jede Lücke sehnt sich nach dem Namen einer Geschichte aus Hyrules Vergangenheit. Nur wer die Verbindungen erkennt, wird das Triforce erwecken.';
+      }
+      return '🔗 An einer mystischen Kreuzung wartet ein Monument mit leeren Feldern. Die Legenden von Hyrule wollen erzählt werden.';
+
+    case 'acrostic':
+      if (isCompleted('kreuzwort')) {
+        return '🎭 Das Triforce hat geleuchtet und Laura den Weg zum Tempel der Stille gewiesen. In diesen heiligen Hallen, wo einst die Göttin selbst meditierte, herrscht vollkommene Ruhe. Drei Kammern – Nordpfad, Waldlichtung und Eishöhle – bergen ein uraltes Geheimnis: die Maske der Göttin selbst.';
+      }
+      return '🎭 Laura betritt den Tempel der Reflexion. In der Stille dieser heiligen Hallen liegt ein mächtiges Artefakt verborgen.';
+
+    case 'romance':
+      if (isCompleted('acrostic')) {
+        return '💖 Die Maske der Göttin in ihren Händen, spürt Laura eine neue Macht in sich erwachen. Sie folgt einem warmen Licht zu einem schimmernden Garten, wo Herzen wie funkelnde Sterne schweben. Jedes trägt eine Erinnerung an Verbindungen und Liebe in sich – doch nur der richtige Pfad offenbart die größte Macht von allen.';
+      }
+      return '💖 Laura betritt einen Garten voller leuchtender Herzen. Jedes pulsiert mit Erinnerungen an Liebe und Verbindung.';
+
+    case 'finale':
+      const completedCount = ['sudoku', 'kreuzwort', 'acrostic', 'romance'].filter(stage => isCompleted(stage as GameStage)).length;
+      if (completedCount >= 4) {
+        return '💎 Laura hat die vier großen Prüfungen gemeistert: Die Weisheit der Zahlen, die Verbindungen der Legenden, die Stille der Reflexion und die Macht der Herzen. Nun schweben die Fragmente ihrer Reise vor ihr – Schild, Symbol, Maske und Herz – und warten darauf, zum finalen Kristall der Macht vereint zu werden.';
+      }
+      return '💎 Die Zeit ist gekommen, alle Fragmente von Lauras Reise zu vereinen. Vier Kristalle schweben vor ihr und warten auf ihre finale Prüfung.';
+
+    case 'elch':
+      if (isCompleted('finale')) {
+        return '🦌 Der Kristall der Macht leuchtet in Lauras Händen und führt sie zum geheimen Hain des Nordens. Hier, am Ende ihrer Verwandlung, wartet die letzte Entscheidung: Fünf edle Tiere bieten sich als ewige Begleiter an. Doch nur einer trägt die Krone des Waldes und wird Laura auf ihrem Weg als Wächterin zur Seite stehen.';
+      }
+      return '🦌 Laura erreicht den mystischen Hain des Nordens. Fünf edle Tiere warten darauf, ihr ewiger Begleiter zu werden.';
+
+    default:
+      return '';
+  }
 };
 
 export function GameEngine() {
@@ -254,15 +303,27 @@ export function GameEngine() {
           </div>
 
           {/* Current Stage Title */}
-          <motion.h2
-            className="text-2xl font-['Jim_Nightshade'] text-pink-200/90"
+          <motion.div
+            className="text-center max-w-4xl mx-auto"
             key={gameState.currentStage}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {stageNames[gameState.currentStage]}
-          </motion.h2>
+            <h2 className="text-2xl font-['Jim_Nightshade'] text-pink-200/90 mb-3">
+              {stageNames[gameState.currentStage]}
+            </h2>
+            {getStageDescription(gameState.currentStage, gameState.completedStages) && (
+              <motion.p
+                className="text-pink-100/80 text-sm leading-relaxed italic max-w-2xl mx-auto"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                {getStageDescription(gameState.currentStage, gameState.completedStages)}
+              </motion.p>
+            )}
+          </motion.div>
         </motion.div>
 
         {/* Game Content */}
@@ -517,7 +578,7 @@ export function GameEngine() {
                   '✨ Anime-Sticker',
                   '❄️ Kühlmaske',
                   '💝 Wundertüte (Romance)',
-                  '🎮 Nintendo Switch Pro Controller',
+                  '🎮 Nintendo Switch Controller',
                   '🦌 Elch-Gefährte aus dem Norden'
                 ].map((gift, index) => (
                   <motion.div

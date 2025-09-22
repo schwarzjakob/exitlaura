@@ -22,35 +22,18 @@ export const SudokuHintContent = () => (
 );
 
 export const KreuzwortHintContent = () => (
-  <>
-    <div className="text-center mb-4 p-3 bg-yellow-100 border-2 border-yellow-400 rounded-lg">
-      <h4 className="text-[16px] font-bold text-yellow-800 mb-2">💡 Lösungsspalte</h4>
-      <p className="text-[13px] text-yellow-700">
-        Die erste Spalte (gelb markiert) enthält die Lösung! 
-        Die ersten Buchstaben der Wörter bilden das berühmte Symbol der Macht.
-      </p>
-    </div>
-    
+  <> 
     <div className="text-center mb-4 p-3 bg-blue-100 border-2 border-blue-400 rounded-lg">
       <h4 className="text-[16px] font-bold text-blue-800 mb-2">🎯 Zelda-Begriffe</h4>
       <p className="text-[13px] text-blue-700">
-        • Grüne Kleidung des Helden → TUNIC<br/>
-        • Vogelvolk in Hyrule → RITO<br/>
-        • Weise Beschützerin → IMPA<br/>
-        • Gefährtin mit Feenstaub → FAIRY<br/>
-        • Klassischer Gegner → OCTOROK<br/>
-        • Währung in Hyrule → RUPEE<br/>
-        • Hühnerlegende → CUCCO<br/>
-        • Links treues Pferd → EPONA
-      </p>
-    </div>
-
-    <div className="text-center mb-4 p-3 bg-green-100 border-2 border-green-400 rounded-lg">
-      <h4 className="text-[16px] font-bold text-green-800 mb-2">🏆 Das Triforce</h4>
-      <p className="text-[13px] text-green-700">
-        T-R-I-F-O-R-C-E - Das heilige Symbol aus drei Dreiecken, 
-        das Macht, Weisheit und Mut vereint. Es ist das Herzstück 
-        der Zelda-Legende!
+        • Das ikonische Outfit, das du oft schon beim ersten Abenteuerteil bekommst.<br/>
+        • Sie leben auch nicht mehr in der Nähe eines Vulkanes sondern in eisiger Höhe bei den Hebra-Bergen.<br/>
+        • Das alte Kindermädchen von Prinzessin Zelda.<br/>
+        • Kleine Wesen mit heilenden Kräften<br/>
+        • Sie leben in Erdlöchern und tarnen sich entweder unter einem Busch oder einem Stein.<br/>
+        • Währung in Hyrule.<br/>
+        • Berüchtigt für aggressive Angriffe. Legt es auch Eier?<br/>
+        • Links treues Pferd.
       </p>
     </div>
   </>

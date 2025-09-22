@@ -44,7 +44,7 @@ export function InteractiveReveal({ variant, onComplete }: InteractiveRevealProp
       case 'E':
         return {
           title: 'Das Relikt vereinigt die Kräfte',
-          body: 'Du hast alle Prüfungen bestanden. Vor dir erscheint das mächtigste Relikt – ein Kristall der Macht, der deine Kräfte bündelt.',
+          body: 'Du hast alle Prüfungen bestanden. Vor dir erscheint das mächtigste Relikt – ein Kristall der Macht, der deine Kräfte bündelt. Oh warte, da ist noch mehr!',
           icon: '💎',
           background: 'from-yellow-400 to-orange-600'
         };

@@ -180,7 +180,7 @@ export function PrintView() {
                 <li>• <strong>Päckchen B:</strong> Anime-Sticker (Jujutsu Kaisen / Attack on Titan)</li>
                 <li>• <strong>Päckchen C:</strong> Kühlmaske</li>
                 <li>• <strong>Päckchen D:</strong> Wundertüte (Romance)</li>
-                <li>• <strong>Päckchen E:</strong> Nintendo Switch Pro Controller (Finale)</li>
+                <li>• <strong>Päckchen E:</strong> Nintendo Switch Controller (Finale)</li>
                 <li>• <strong>Päckchen F:</strong> Kleiner Elch / Nordischer Gefährte</li>
               </ul>
             </div>
