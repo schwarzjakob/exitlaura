@@ -68,7 +68,7 @@ export function InteractiveSudoku({ gameState, onComplete }: InteractiveSudokuPr
 
     setCalculatedPage(number);
 
-    if (number === 56) {
+    if (number === 53) {
       toast.success(`Perfekt! Die Zahl ${number} ist korrekt!`);
       setTimeout(() => setShowSudoku(true), 1000);
     } else {
